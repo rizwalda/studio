@@ -25,10 +25,7 @@ export default function TissuePapersComingSoon() {
           Tissue Papers, Please!
         </h1>
         <p className="text-2xl text-muted-foreground mb-8">
-          Coming Soon!
-        </p>
-        <p className="max-w-md text-muted-foreground mb-12">
-          We're working hard to bring you a new space for important resources. Stay tuned!
+          Cumming Soon!
         </p>
         <Button asChild>
           <Link href="/">
