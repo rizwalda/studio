@@ -176,6 +176,16 @@ export const data: Category[] = [
             { name: 'Hacker News', url: 'https://example.com', description: 'A social news website focusing on computer science and entrepreneurship.' },
             { name: 'Reddit', url: 'https://example.com', description: 'The front page of the internet.' },
             { name: 'Dev.to', url: 'https://example.com', description: 'A community of software developers.' },
+            { name: 'Medium', url: 'https://example.com', description: 'An online publishing platform with a wide range of topics.' },
+            { name: 'Stack Overflow', url: 'https://example.com', description: 'The largest community for developers to learn and share knowledge.' },
+            { name: 'Lobsters', url: 'https://example.com', description: 'A computing-focused community sharing links and discussions.' },
+            { name: 'Slashdot', url: 'https://example.com', description: 'News for nerds, stuff that matters.' },
+            { name: 'TechCrunch', url: 'https://example.com', description: 'Breaking tech news and startup profiles.' },
+            { name: 'The Verge', url: 'https://example.com', description: 'Technology news, reviews, and media network.' },
+            { name: 'Ars Technica', url: 'https://example.com', description: 'In-depth news and opinions on technology, science, and more.' },
+            { name: 'freeCodeCamp', url: 'https://example.com', description: 'Learn to code for free. Build projects. Earn certifications.' },
+            { name: 'CSS-Tricks', url: 'https://example.com', description: 'Daily articles about CSS, HTML, JavaScript, and all things web development.' },
+            { name: 'Smashing Magazine', url: 'https://example.com', description: 'For professional web designers and developers.' },
         ]}
     ]
   }
