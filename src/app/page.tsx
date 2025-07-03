@@ -30,19 +30,19 @@ const TableOfContents = ({
   return (
     <>
       <h4
-        className="font-semibold text-lg mb-4 text-foreground cursor-pointer hover:text-primary transition-colors"
+        className="font-semibold text-xl mb-4 text-foreground cursor-pointer hover:text-primary transition-colors"
         onClick={scrollToTop}
       >
         Table of Contents
       </h4>
-      <ul className="space-y-2">
+      <ul className="space-y-3">
         {data.map((category) => (
           <li key={`${category.id}-toc`}>
             <a
               href={`#${category.id}`}
               onClick={(e) => onLinkClick(e, category.id)}
               className={cn(
-                'block py-1 text-sm transition-all duration-300',
+                'block py-1.5 text-base transition-all duration-300',
                 activeItemId === category.id || parentOfActive === category.id
                   ? 'text-primary font-semibold'
                   : 'text-muted-foreground hover:text-foreground'
@@ -59,7 +59,7 @@ const TableOfContents = ({
                         href={`#${sub.id}`}
                         onClick={(e) => onLinkClick(e, sub.id)}
                         className={cn(
-                          'block py-1 text-xs transition-all duration-300',
+                          'block py-1.5 text-sm transition-all duration-300',
                           activeItemId === sub.id
                             ? 'text-accent font-medium'
                             : 'text-muted-foreground/80 hover:text-foreground'
@@ -95,6 +95,7 @@ export default function Home() {
   activeItemIdRef.current = activeItemId;
   
   useEffect(() => {
+    // This effect runs only on the client after hydration
     setCurrentYear(new Date().getFullYear().toString());
   }, []);
 
@@ -253,9 +254,9 @@ export default function Home() {
                       </Button>
                   </SheetTrigger>
                   <SheetContent side="left" className="w-full max-w-xs p-6 bg-card border-r-border overflow-y-auto">
-                      <SheetHeader>
+                      <SheetHeader className="sr-only">
                         <SheetTitle>Menu</SheetTitle>
-                        <SheetDescription className="sr-only">
+                        <SheetDescription>
                           Table of contents for the page.
                         </SheetDescription>
                       </SheetHeader>
@@ -362,7 +363,7 @@ export default function Home() {
       </div>
        <footer className="mt-12 lg:mt-24 border-t border-border/20">
         <div className="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear} GOONMOVEMENT.</p>
+          <p>&copy; {currentYear || new Date().getFullYear().toString()} GOONMOVEMENT.</p>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="group inline-flex items-center gap-2 hover:text-foreground transition-colors"
