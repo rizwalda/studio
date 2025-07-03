@@ -43,6 +43,7 @@ export default function Home() {
   const [activeItemId, setActiveItemId] = useState<string>('');
   const itemRefs = useRef(new Map<string, HTMLElement | null>());
 
+  // This effect handles filtering based on the search term. It is working correctly.
   useEffect(() => {
     const lowercasedFilter = searchTerm.toLowerCase();
     if (!lowercasedFilter) {
@@ -68,7 +69,10 @@ export default function Home() {
     setFilteredData(filtered);
   }, [searchTerm]);
 
+
+  // **NEW, ROBUST SCROLL AND CLICK LOGIC**
   useEffect(() => {
+    // Create a list of all IDs that are rendered and should be tracked.
     const trackedItemIds = filteredData.flatMap(category => [
       category.id,
       ...category.subcategories
@@ -79,39 +83,59 @@ export default function Home() {
     if (trackedItemIds.length === 0) return;
 
     const handleScroll = () => {
-      const triggerPoint = window.innerHeight * 0.3;
-      let newActiveId = '';
-
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5) {
-        newActiveId = trackedItemIds[trackedItemIds.length - 1];
+      let currentActiveId = '';
+      
+      // If at the very bottom of the page, the last item is active.
+      if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 5) {
+        currentActiveId = trackedItemIds[trackedItemIds.length - 1];
       } else {
+        // Find the last section that has scrolled past the top of the viewport.
+        // The offset makes it feel more natural.
+        const fromTop = 160; // 10rem offset (covers header and some breathing room)
         for (const id of trackedItemIds) {
           const element = itemRefs.current.get(id);
-          if (element && element.getBoundingClientRect().top <= triggerPoint) {
-            newActiveId = id;
+          if (element && element.getBoundingClientRect().top < fromTop) {
+            currentActiveId = id;
           } else {
-            break; 
+            break; // Stop when we find an element that hasn't passed the line
           }
         }
       }
-
-      if (!newActiveId && trackedItemIds.length > 0) {
-        newActiveId = trackedItemIds[0];
+      
+      // If at the very top, the first item is active.
+      if (window.scrollY < 100 && trackedItemIds.length > 0) {
+          currentActiveId = trackedItemIds[0];
       }
 
-      if (newActiveId && activeItemId !== newActiveId) {
-        setActiveItemId(newActiveId);
+      if (currentActiveId && activeItemId !== currentActiveId) {
+        setActiveItemId(currentActiveId);
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    handleScroll(); // Initial check
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [filteredData, activeItemId]);
+  }, [filteredData, activeItemId]); // Re-run when data changes or active item is manually set.
 
+  // Handles clicks on the Table of Contents
+  const handleTocClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault(); // Prevent default anchor jump
+    setActiveItemId(id); // Set active state immediately for responsiveness
+    
+    // Smooth scroll to the section
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
+  // Helper to determine if a subcategory's parent is the active item
   const getParentId = (subId: string): string | null => {
     for (const category of data) {
       if (category.subcategories.some(s => s.id === subId)) {
@@ -147,6 +171,7 @@ export default function Home() {
                   <li key={`${category.id}-toc`}>
                     <a
                       href={`#${category.id}`}
+                      onClick={(e) => handleTocClick(e, category.id)}
                       className={cn(
                         'block py-1 text-sm transition-colors',
                         activeItemId === category.id || parentOfActive === category.id
@@ -163,6 +188,7 @@ export default function Home() {
                             <li key={`${sub.id}-toc`}>
                               <a
                                 href={`#${sub.id}`}
+                                onClick={(e) => handleTocClick(e, sub.id)}
                                 className={cn(
                                   'block py-1 text-xs transition-colors',
                                   activeItemId === sub.id
