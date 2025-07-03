@@ -45,39 +45,27 @@ export default function Home() {
       
       if (sortedRefs.length === 0) return;
 
-      const scrollY = window.scrollY;
-      const innerHeight = window.innerHeight;
-      const scrollHeight = document.documentElement.scrollHeight;
+      const triggerPoint = window.innerHeight * 0.3;
+      let closestId: string | null = null;
+      let minDistance = Infinity;
 
-      // Case 1: At the absolute bottom of the page
-      if (innerHeight + scrollY >= scrollHeight - 10) {
-        setActiveItemId(sortedRefs[sortedRefs.length - 1][0]);
-        return;
-      }
-
-      // Case 2: At the absolute top of the page
-      if (scrollY < 50) {
-        setActiveItemId(sortedRefs[0][0]);
-        return;
-      }
-
-      // Case 3: In the middle of the page
-      const triggerPoint = innerHeight * 0.3;
-      let newActiveId = '';
-
-      for (let i = sortedRefs.length - 1; i >= 0; i--) {
-        const [id, ref] = sortedRefs[i];
-        if (ref.getBoundingClientRect().top < triggerPoint) {
-          newActiveId = id;
-          break;
+      for (const [id, ref] of sortedRefs) {
+        if (ref) {
+          const rect = ref.getBoundingClientRect();
+          // Consider sections that are within the viewport
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            const distance = Math.abs(rect.top - triggerPoint);
+            if (distance < minDistance) {
+              minDistance = distance;
+              closestId = id;
+            }
+          }
         }
       }
 
-      if (!newActiveId) {
-        newActiveId = sortedRefs[0][0];
+      if (closestId) {
+        setActiveItemId(closestId);
       }
-
-      setActiveItemId(newActiveId);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
