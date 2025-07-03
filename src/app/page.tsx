@@ -1,57 +1,105 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { data } from '@/lib/data';
-import { Star, ArrowUpRight } from 'lucide-react';
+import { data, Category } from '@/lib/data';
+import { Star, ArrowUpRight, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState<string>('');
-  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredData, setFilteredData] = useState<Category[]>(data);
+  const [activeItemId, setActiveItemId] = useState<string>('');
+  const itemRefs = useRef(new Map<string, HTMLElement | null>());
 
   useEffect(() => {
-    sectionRefs.current = sectionRefs.current.slice(0, data.length);
+    const lowercasedFilter = searchTerm.toLowerCase();
+    if (!lowercasedFilter) {
+      setFilteredData(data);
+      return;
+    }
 
+    const filtered = data.map(category => {
+      const filteredSubcategories = category.subcategories.map(subcategory => {
+        const filteredLinks = subcategory.links.filter(link =>
+          link.name.toLowerCase().includes(lowercasedFilter) ||
+          (link.description && link.description.toLowerCase().includes(lowercasedFilter))
+        );
+        return { ...subcategory, links: filteredLinks };
+      }).filter(subcategory => subcategory.links.length > 0);
+      
+      if(filteredSubcategories.length > 0) {
+        return { ...category, subcategories: filteredSubcategories };
+      }
+      return null;
+    }).filter((category): category is Category => category !== null);
+
+    setFilteredData(filtered);
+  }, [searchTerm]);
+
+  useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 150; // Add offset for better trigger point
-      let currentSectionId = '';
+      const scrollPosition = window.scrollY + 200;
+      let currentId = '';
 
-      sectionRefs.current.forEach((sectionRef) => {
-        if (sectionRef && scrollPosition >= sectionRef.offsetTop) {
-          currentSectionId = sectionRef.id;
+      itemRefs.current.forEach((ref, id) => {
+        if (ref && scrollPosition >= ref.offsetTop) {
+          currentId = id;
         }
       });
       
-      if (activeSection !== currentSectionId) {
-        setActiveSection(currentSectionId);
+      if (activeItemId !== currentId) {
+        setActiveItemId(currentId);
       }
     };
     
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Set initial active section
+    handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [activeSection]);
+  }, [activeItemId]);
+
+  const getParentId = (subId: string): string | null => {
+    for (const category of data) {
+      if (category.subcategories.some(s => s.id === subId)) {
+        return category.id;
+      }
+    }
+    return null;
+  };
+
+  const parentOfActive = getParentId(activeItemId);
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row px-4 sm:px-6 lg:px-8">
         <main className="w-full lg:w-3/4 py-12 lg:pr-16">
-          <header className="mb-12">
+          <header className="mb-8">
             <h1 className="text-5xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
               GOONMOVEMENT
             </h1>
             <p className="text-lg text-muted-foreground mt-2">A curated list of resources.</p>
           </header>
 
+          <div className="relative mb-12">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search all resources..."
+              className="w-full pl-12 h-12 text-lg bg-card border-2 border-border focus:border-primary/50 transition-colors"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+
           <div className="space-y-16">
-            {data.map((category, index) => (
+            {filteredData.map((category) => (
               <section
                 key={category.id}
                 id={category.id}
-                ref={(el) => (sectionRefs.current[index] = el)}
+                ref={(el) => itemRefs.current.set(category.id, el)}
                 className="scroll-mt-24"
               >
                 <h2 className="text-3xl font-bold text-gray-200 border-b-2 border-primary/30 pb-3 mb-6">
@@ -59,53 +107,86 @@ export default function Home() {
                 </h2>
                 <div className="space-y-8">
                   {category.subcategories.map((sub) => (
-                    <div key={sub.id}>
-                      {sub.name && <h3 className="text-xl font-semibold text-gray-400 mb-4">{sub.name}</h3>}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {sub.links.map((link) => (
-                          <a
-                            key={link.name}
-                            href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group bg-card p-4 rounded-lg border border-border hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 flex justify-between items-start"
-                          >
-                            <div>
-                                <div className="flex items-center mb-1">
-                                    {link.premium && <Star className="h-4 w-4 text-primary fill-primary mr-2" />}
-                                    <p className="font-semibold text-foreground">{link.name}</p>
-                                </div>
-                                {link.description && <p className="text-sm text-muted-foreground">{link.description}</p>}
-                            </div>
-                            <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-accent transition-transform duration-300 transform group-hover:rotate-45" />
-                          </a>
-                        ))}
+                     sub.links.length > 0 && (
+                      <div 
+                        key={sub.id} 
+                        id={sub.id} 
+                        ref={(el) => itemRefs.current.set(sub.id, el)}
+                        className="scroll-mt-24"
+                      >
+                        {sub.name && <h3 className="text-xl font-semibold text-gray-400 mb-4">{sub.name}</h3>}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {sub.links.map((link) => (
+                            <a
+                              key={link.name}
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="group bg-card p-4 rounded-lg border border-border hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 flex justify-between items-start"
+                            >
+                              <div>
+                                  <div className="flex items-center mb-1">
+                                      {link.premium && <Star className="h-4 w-4 text-primary fill-primary mr-2" />}
+                                      <p className="font-semibold text-foreground">{link.name}</p>
+                                  </div>
+                                  {link.description && <p className="text-sm text-muted-foreground">{link.description}</p>}
+                              </div>
+                              <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-accent transition-transform duration-300 transform group-hover:rotate-45" />
+                            </a>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                     )
                   ))}
                 </div>
               </section>
             ))}
+            {filteredData.length === 0 && (
+                <div className="text-center py-16">
+                    <p className="text-muted-foreground text-lg">No results found for "{searchTerm}".</p>
+                </div>
+            )}
           </div>
         </main>
 
         <aside className="hidden lg:block w-1/4 py-12">
           <div className="sticky top-24">
             <h4 className="font-semibold text-lg mb-4 text-foreground">Table of Contents</h4>
-            <ul className="space-y-2 border-l border-border">
+            <ul className="space-y-1">
               {data.map((category) => (
                 <li key={`${category.id}-toc`}>
                   <a
                     href={`#${category.id}`}
                     className={cn(
-                      'block pl-4 py-1 text-sm border-l-2 transition-colors',
-                      activeSection === category.id
-                        ? 'text-primary border-primary'
-                        : 'text-muted-foreground border-transparent hover:text-foreground hover:border-gray-500'
+                      'block pl-4 py-1.5 text-sm border-l-2 transition-colors',
+                      activeItemId === category.id || parentOfActive === category.id
+                        ? 'text-primary border-primary font-semibold'
+                        : 'text-muted-foreground border-border hover:text-foreground hover:border-gray-500'
                     )}
                   >
                     {category.name}
                   </a>
+                  {category.subcategories.length > 0 && (
+                    <ul className="pl-6 mt-1 space-y-1">
+                      {category.subcategories.map(sub => (
+                        sub.name && (
+                          <li key={`${sub.id}-toc`}>
+                            <a
+                              href={`#${sub.id}`}
+                              className={cn(
+                                'block pl-4 py-1 text-xs border-l-2 transition-colors',
+                                activeItemId === sub.id
+                                  ? 'text-accent border-accent font-medium'
+                                  : 'text-muted-foreground/70 border-border/50 hover:text-foreground hover:border-gray-500'
+                              )}
+                            >
+                              {sub.name}
+                            </a>
+                          </li>
+                        )
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>
