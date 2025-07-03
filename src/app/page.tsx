@@ -78,12 +78,24 @@ export default function Home() {
 
   const parentOfActive = getParentId(activeItemId);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <div className="max-w-screen-xl mx-auto lg:grid lg:grid-cols-12 lg:gap-x-12 px-4 sm:px-6 lg:px-8">
         <aside className="hidden lg:block lg:col-span-3 py-12">
           <div className="sticky top-24">
-            <h4 className="font-semibold text-lg mb-4 text-foreground">Table of Contents</h4>
+            <h4
+              className="font-semibold text-lg mb-4 text-foreground cursor-pointer hover:text-primary transition-colors"
+              onClick={scrollToTop}
+            >
+              Table of Contents
+            </h4>
             <ul className="space-y-2">
               {data.map((category) => (
                 <li key={`${category.id}-toc`}>
