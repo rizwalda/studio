@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { data, Category } from '@/lib/data';
-import { Star, ArrowUpRight, Search, ArrowUp, Menu, ImageIcon } from 'lucide-react';
+import { Star, ArrowUpRight, Search, ArrowUp, Menu, Box } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -93,9 +93,6 @@ export default function Home() {
   
   useEffect(() => {
     setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
     setCurrentYear(new Date().getFullYear().toString());
   }, []);
 
@@ -137,6 +134,8 @@ export default function Home() {
   }, [searchTerm]);
 
   useEffect(() => {
+    if (!isMounted) return;
+
     const trackedItemIds = filteredData.flatMap(category => [
       category.id,
       ...category.subcategories
@@ -146,7 +145,7 @@ export default function Home() {
 
     if (trackedItemIds.length === 0) return;
 
-    if (typeof window !== 'undefined' && window.scrollY < 100) {
+    if (window.scrollY < 100) {
       setActiveItemId(trackedItemIds[0]);
     }
 
@@ -196,7 +195,7 @@ export default function Home() {
       }
       clearTimeout(initialCheckTimeout);
     };
-  }, [filteredData]);
+  }, [filteredData, isMounted]);
 
   const handleTocClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
@@ -241,10 +240,10 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
-      <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border">
-          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center h-20">
+      <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border h-24">
+          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center h-full">
               <button onClick={scrollToTop} className="focus:outline-none focus:ring-2 focus:ring-ring rounded-sm">
-                <h1 className="text-2xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+                <h1 className="text-3xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
                   GOONMOVEMENT
                 </h1>
               </button>
@@ -264,8 +263,8 @@ export default function Home() {
                       </SheetHeader>
                       <Button asChild className="w-full mb-6" onClick={() => setIsMenuOpen(false)}>
                         <Link href="/image-board">
-                          <ImageIcon className="mr-2 h-4 w-4" />
-                          Image Board
+                          <Box className="mr-2 h-4 w-4" />
+                          Tissue Papers, Please!
                         </Link>
                       </Button>
                       <TableOfContents 
@@ -321,8 +320,8 @@ export default function Home() {
               </div>
               <Button asChild variant="outline" size="lg" className="hidden lg:inline-flex">
                 <Link href="/image-board">
-                  <ImageIcon className="mr-2 h-4 w-4" />
-                  Image Board
+                  <Box className="mr-2 h-4 w-4" />
+                  Tissue Papers, Please!
                 </Link>
               </Button>
             </div>
