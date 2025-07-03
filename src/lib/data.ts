@@ -21,7 +21,7 @@ export type Category = {
 export const data: Category[] = [
   {
     id: 'index',
-    name: 'NSFW Indexes',
+    name: 'NSFW Indices',
     subcategories: [
       {
         id: 'index-main',
@@ -29,20 +29,33 @@ export const data: Category[] = [
         links: [ 
           { name: "Reddit Doesn't Like This Site", url: 'https://www.reddit-doesnt-like-this.site/', premium: true },
           { name: 'NSFW Subreddits, 2, 3 or Multireddits', url: 'https://www.reddit.com/r/NSFW411/wiki/index', premium: true },
-          { name: 'PornBox', url: 'http://pornbox.org/' },
-          { name: 'One Porn List', url: 'https://example.com' },
-          { name: 'BigPornList', url: 'https://example.com' },
-          { name: 'MrPornGeek', url: 'https://example.com' },
-          { name: 'The Best Fetish Sites', url: 'https://example.com' },
-          { name: 'PornList18', url: 'https://example.com' },
+          { name: 'PornBox', url: 'http://pornbox.org/', premium: true },
+          { name: 'One Porn List', url: 'https://onepornlist.com/' },
+          { name: 'BigPornList', url: 'https://bigpornlist.net/' },
+          { name: 'MrPornGeek', url: 'https://www.mrporngeek.com/' },
+          { name: 'The Best Fetish Sites', url: 'https://thebestfetishsites.com/' },
+          { name: 'PornList18', url: 'https://pornlist18.com/' },
         ],
       },
     ],
   },
   {
-    id: 'nsfw-content',
-    name: 'NSFW',
+    id: 'streaming-content',
+    name: 'Streaming',
     subcategories: [
+      {
+        id: 'streaming-main',
+        name: '',
+        links: [
+          { name: 'HQPorner', url: 'https://example.com', premium: true },
+          { name: 'SexyPorn', url: 'https://example.com', premium: true },
+          { name: 'WatchPorn.to', url: 'https://example.com', premium: true },
+          { name: 'Porninja', url: 'https://example.com' },
+          { name: 'PornHoarder, 2', url: 'https://example.com' },
+          { name: 'Noodlemagazine, 2, 3, 4, 5, 6, 7', url: 'https://example.com', description: 'Search Engine' },
+          { name: 'iXXX or PornMD', url: 'https://example.com', description: 'Aggregators' },
+        ],
+      },
       {
         id: 'nsfw-doujin',
         name: 'Doujinshi & Manga',
