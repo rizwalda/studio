@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { data, Category } from '@/lib/data';
-import { Star, ArrowUpRight, Search, ArrowUp, Menu, Box } from 'lucide-react';
+import { Star, ArrowUpRight, Search, ArrowUp, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -263,7 +263,6 @@ export default function Home() {
                       </SheetHeader>
                       <Button asChild className="w-full mb-6" onClick={() => setIsMenuOpen(false)}>
                         <Link href="/tissues">
-                          <Box className="mr-2 h-4 w-4" />
                           Tissue Papers, Please!
                         </Link>
                       </Button>
@@ -320,7 +319,6 @@ export default function Home() {
               </div>
               <Button asChild variant="outline" size="lg" className="hidden lg:inline-flex">
                 <Link href="/tissues">
-                  <Box className="mr-2 h-4 w-4" />
                   Tissue Papers, Please!
                 </Link>
               </Button>
