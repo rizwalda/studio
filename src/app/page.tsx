@@ -42,6 +42,12 @@ export default function Home() {
   const [filteredData, setFilteredData] = useState<Category[]>(data);
   const [activeItemId, setActiveItemId] = useState<string>('');
   const itemRefs = useRef(new Map<string, HTMLElement | null>());
+  const isClickScrolling = useRef(false);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  const activeItemIdRef = useRef(activeItemId);
+  activeItemIdRef.current = activeItemId;
+
 
   // This effect handles filtering based on the search term. It is working correctly.
   useEffect(() => {
@@ -70,9 +76,8 @@ export default function Home() {
   }, [searchTerm]);
 
 
-  // **NEW, ROBUST SCROLL AND CLICK LOGIC**
+  // **REFINED SCROLL AND CLICK LOGIC FOR SMOOTHNESS**
   useEffect(() => {
-    // Create a list of all IDs that are rendered and should be tracked.
     const trackedItemIds = filteredData.flatMap(category => [
       category.id,
       ...category.subcategories
@@ -83,31 +88,33 @@ export default function Home() {
     if (trackedItemIds.length === 0) return;
 
     const handleScroll = () => {
+      // Don't run scroll-based highlighting if a click-scroll is in progress
+      if (isClickScrolling.current) return;
+
       let currentActiveId = '';
       
-      // If at the very bottom of the page, the last item is active.
-      if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 5) {
+      // At the very bottom, highlight the last item
+      if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 10) {
         currentActiveId = trackedItemIds[trackedItemIds.length - 1];
       } else {
-        // Find the last section that has scrolled past the top of the viewport.
-        // The offset makes it feel more natural.
-        const fromTop = 160; // 10rem offset (covers header and some breathing room)
+        // Otherwise, find the last item that passed the activation line
+        const fromTop = 160; // 10rem offset
         for (const id of trackedItemIds) {
           const element = itemRefs.current.get(id);
           if (element && element.getBoundingClientRect().top < fromTop) {
             currentActiveId = id;
           } else {
-            break; // Stop when we find an element that hasn't passed the line
+            break; 
           }
         }
       }
       
-      // If at the very top, the first item is active.
+      // At the very top, highlight the first item
       if (window.scrollY < 100 && trackedItemIds.length > 0) {
           currentActiveId = trackedItemIds[0];
       }
 
-      if (currentActiveId && activeItemId !== currentActiveId) {
+      if (currentActiveId && activeItemIdRef.current !== currentActiveId) {
         setActiveItemId(currentActiveId);
       }
     };
@@ -117,15 +124,24 @@ export default function Home() {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
     };
-  }, [filteredData, activeItemId]); // Re-run when data changes or active item is manually set.
+  }, [filteredData]); // Effect only re-runs when data changes, not on every highlight
 
   // Handles clicks on the Table of Contents
   const handleTocClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault(); // Prevent default anchor jump
     setActiveItemId(id); // Set active state immediately for responsiveness
     
-    // Smooth scroll to the section
+    isClickScrolling.current = true; // Set flag to disable scroll listener
+    
+    // Clear any existing timeout to avoid premature reset
+    if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+    }
+    
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({
@@ -133,6 +149,11 @@ export default function Home() {
         block: 'start',
       });
     }
+
+    // Reset the flag after scrolling is likely complete (1s)
+    scrollTimeout.current = setTimeout(() => {
+        isClickScrolling.current = false;
+    }, 1000);
   };
 
   // Helper to determine if a subcategory's parent is the active item
@@ -173,7 +194,7 @@ export default function Home() {
                       href={`#${category.id}`}
                       onClick={(e) => handleTocClick(e, category.id)}
                       className={cn(
-                        'block py-1 text-sm transition-colors',
+                        'block py-1 text-sm transition-all duration-300',
                         activeItemId === category.id || parentOfActive === category.id
                           ? 'text-primary font-semibold'
                           : 'text-muted-foreground hover:text-foreground'
@@ -190,7 +211,7 @@ export default function Home() {
                                 href={`#${sub.id}`}
                                 onClick={(e) => handleTocClick(e, sub.id)}
                                 className={cn(
-                                  'block py-1 text-xs transition-colors',
+                                  'block py-1 text-xs transition-all duration-300',
                                   activeItemId === sub.id
                                     ? 'text-accent font-medium'
                                     : 'text-muted-foreground/80 hover:text-foreground'
