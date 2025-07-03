@@ -10,7 +10,6 @@ const Footer = () => {
   const [currentYear, setCurrentYear] = useState('');
 
   useEffect(() => {
-    // This runs only on the client, after hydration, to prevent a mismatch
     setCurrentYear(new Date().getFullYear().toString());
   }, []);
 
@@ -70,59 +69,46 @@ export default function Home() {
   }, [searchTerm]);
 
   useEffect(() => {
-    // Create an ordered list of all IDs that are rendered on the page
-    const itemIds = filteredData.flatMap(category => [
-        category.id,
-        ...category.subcategories
-            .filter(sub => sub.links.length > 0)
-            .map(sub => sub.id)
+    const trackedItemIds = filteredData.flatMap(category => [
+      category.id,
+      ...category.subcategories
+        .filter(sub => sub.links.length > 0 && sub.name)
+        .map(sub => sub.id)
     ]);
 
-    if (itemIds.length === 0) return;
+    if (trackedItemIds.length === 0) return;
 
     const handleScroll = () => {
-        const triggerPoint = window.innerHeight * 0.3; // 30% from the top
-        let currentActiveId = '';
+      const triggerPoint = window.innerHeight * 0.3;
+      let newActiveId = '';
 
-        // Case 1: Scrolled to the absolute bottom of the page
-        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5) {
-            currentActiveId = itemIds[itemIds.length - 1];
-            setActiveItemId(currentActiveId);
-            return;
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5) {
+        newActiveId = trackedItemIds[trackedItemIds.length - 1];
+      } else {
+        for (const id of trackedItemIds) {
+          const element = itemRefs.current.get(id);
+          if (element && element.getBoundingClientRect().top <= triggerPoint) {
+            newActiveId = id;
+          } else {
+            break; 
+          }
         }
+      }
 
-        // Case 2: Iterate through items to find the last one above the trigger point
-        for (const id of itemIds) {
-            const element = itemRefs.current.get(id);
-            if (element) {
-                const rect = element.getBoundingClientRect();
-                if (rect.top <= triggerPoint) {
-                    currentActiveId = id;
-                } else {
-                    // Since items are sorted by their position on the page,
-                    // we can break early once we find an item below the trigger point.
-                    break;
-                }
-            }
-        }
+      if (!newActiveId && trackedItemIds.length > 0) {
+        newActiveId = trackedItemIds[0];
+      }
 
-        // Case 3: Nothing is above the trigger point (i.e., at the top of the page)
-        // or no active ID was found. Default to the first item.
-        if (!currentActiveId) {
-            currentActiveId = itemIds[0];
-        }
-
-        if (activeItemId !== currentActiveId) {
-            setActiveItemId(currentActiveId);
-        }
+      if (newActiveId && activeItemId !== newActiveId) {
+        setActiveItemId(newActiveId);
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // Run on initial load
     handleScroll();
 
     return () => {
-        window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [filteredData, activeItemId]);
 
@@ -173,7 +159,7 @@ export default function Home() {
                     {category.subcategories.length > 0 && (
                       <ul className="pl-4 mt-2 space-y-2 border-l border-border ml-3">
                         {category.subcategories.map(sub => (
-                          sub.name && (
+                          sub.name && sub.links.length > 0 && (
                             <li key={`${sub.id}-toc`}>
                               <a
                                 href={`#${sub.id}`}
