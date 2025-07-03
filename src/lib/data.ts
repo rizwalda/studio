@@ -1,3 +1,4 @@
+
 export type LinkItem = {
   name: string;
   url: string;
@@ -19,14 +20,14 @@ export type Category = {
 
 export const data: Category[] = [
   {
-    id: 'streaming',
-    name: 'Streaming',
+    id: 'index',
+    name: 'NSFW Indexes',
     subcategories: [
       {
-        id: 'streaming-main',
+        id: 'index-main',
         name: '',
-        links: [
-          { name: 'Plex', url: 'https://example.com', premium: true, description: 'Organize, stream, and share your media.' },
+        links: [ 
+          { name: "Reddit Doesn't Like This Site", url: 'https://example.com', premium: true, description: 'Organize, stream, and share your media.' },
           { name: 'Jellyfin', url: 'https://example.com', premium: true, description: 'The Free Software Media System.' },
           { name: 'Stremio', url: 'https://example.com', premium: true, description: 'All your video content on one screen.' },
           { name: 'Kodi', url: 'https://example.com', premium: true, description: 'Open source home theater software.' },
