@@ -2,19 +2,24 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { data, Category } from '@/lib/data';
-import { Star, ArrowUpRight, Search, ArrowUp } from 'lucide-react';
+import { Star, ArrowUpRight, Search, ArrowUp, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
-const Footer = () => {
-  const [currentYear, setCurrentYear] = useState<string | null>(null);
-
-  useEffect(() => {
-    // This code runs only on the client, after the component has mounted.
-    // This prevents a hydration mismatch between the server and client.
-    setCurrentYear(new Date().getFullYear().toString());
-  }, []);
-
+// Reusable Table of Contents Component
+const TableOfContents = ({
+  data,
+  activeItemId,
+  parentOfActive,
+  onLinkClick,
+}: {
+  data: Category[];
+  activeItemId: string;
+  parentOfActive: string | null;
+  onLinkClick: (e: React.MouseEvent<HTMLAnchorElement>, id: string) => void;
+}) => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -23,32 +28,75 @@ const Footer = () => {
   };
 
   return (
-    <footer className="mt-24 border-t border-border/20">
-      <div className="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm text-muted-foreground">
-        <p>&copy; {currentYear || ''} GOONMOVEMENT. All rights reserved.</p>
-        <button
-          onClick={scrollToTop}
-          className="group inline-flex items-center gap-2 hover:text-foreground transition-colors"
-          aria-label="Scroll to top"
-        >
-          <span>Back to top</span>
-          <ArrowUp className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
-        </button>
-      </div>
-    </footer>
+    <>
+      <h4
+        className="font-semibold text-lg mb-4 text-foreground cursor-pointer hover:text-primary transition-colors"
+        onClick={scrollToTop}
+      >
+        Table of Contents
+      </h4>
+      <ul className="space-y-2">
+        {data.map((category) => (
+          <li key={`${category.id}-toc`}>
+            <a
+              href={`#${category.id}`}
+              onClick={(e) => onLinkClick(e, category.id)}
+              className={cn(
+                'block py-1 text-sm transition-all duration-300',
+                activeItemId === category.id || parentOfActive === category.id
+                  ? 'text-primary font-semibold'
+                  : 'text-muted-foreground hover:text-foreground'
+              )}
+            >
+              {category.name}
+            </a>
+            {category.subcategories.length > 0 && (
+              <ul className="pl-4 mt-2 space-y-2 border-l border-border ml-3">
+                {category.subcategories.map(sub => (
+                  sub.name && sub.links.length > 0 && (
+                    <li key={`${sub.id}-toc`}>
+                      <a
+                        href={`#${sub.id}`}
+                        onClick={(e) => onLinkClick(e, sub.id)}
+                        className={cn(
+                          'block py-1 text-xs transition-all duration-300',
+                          activeItemId === sub.id
+                            ? 'text-accent font-medium'
+                            : 'text-muted-foreground/80 hover:text-foreground'
+                        )}
+                      >
+                        {sub.name}
+                      </a>
+                    </li>
+                  )
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
+
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState<Category[]>(data);
   const [activeItemId, setActiveItemId] = useState<string>('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentYear, setCurrentYear] = useState<string | null>(null);
+
   const itemRefs = useRef(new Map<string, HTMLElement | null>());
   const isClickScrolling = useRef(false);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const activeItemIdRef = useRef(activeItemId);
   activeItemIdRef.current = activeItemId;
+  
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear().toString());
+  }, []);
 
 
   // This effect handles filtering based on the search term. It is working correctly.
@@ -100,7 +148,7 @@ export default function Home() {
         currentActiveId = trackedItemIds[trackedItemIds.length - 1];
       } else {
         // Otherwise, find the last item that passed the activation line
-        const fromTop = 160; // 10rem offset
+        const fromTop = window.innerHeight * 0.3; // 30% offset
         for (const id of trackedItemIds) {
           const element = itemRefs.current.get(id);
           if (element && element.getBoundingClientRect().top < fromTop) {
@@ -136,6 +184,7 @@ export default function Home() {
   const handleTocClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault(); // Prevent default anchor jump
     setActiveItemId(id); // Set active state immediately for responsiveness
+    setIsMenuOpen(false); // Close mobile menu on click
     
     isClickScrolling.current = true; // Set flag to disable scroll listener
     
@@ -170,88 +219,68 @@ export default function Home() {
 
   const parentOfActive = getParentId(activeItemId);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
-
   return (
     <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
+      {/* Mobile Header */}
+      <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border">
+          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center h-16">
+              <h1 className="text-xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+                GOONMOVEMENT
+              </h1>
+              <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+                  <SheetTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                          <Menu className="h-6 w-6" />
+                          <span className="sr-only">Open Menu</span>
+                      </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="w-full max-w-xs p-6 bg-card border-r-border overflow-y-auto">
+                      <TableOfContents 
+                        data={filteredData} 
+                        activeItemId={activeItemId} 
+                        parentOfActive={parentOfActive} 
+                        onLinkClick={handleTocClick} 
+                      />
+                  </SheetContent>
+              </Sheet>
+          </div>
+      </header>
+
       <div className="flex-grow">
         <div className="max-w-screen-xl mx-auto lg:grid lg:grid-cols-12 lg:gap-x-12 px-4 sm:px-6 lg:px-8">
+          {/* Desktop Sidebar */}
           <aside className="hidden lg:block lg:col-span-3 py-12">
             <div className="sticky top-24">
-              <h4
-                className="font-semibold text-lg mb-4 text-foreground cursor-pointer hover:text-primary transition-colors"
-                onClick={scrollToTop}
-              >
-                Table of Contents
-              </h4>
-              <ul className="space-y-2">
-                {filteredData.map((category) => (
-                  <li key={`${category.id}-toc`}>
-                    <a
-                      href={`#${category.id}`}
-                      onClick={(e) => handleTocClick(e, category.id)}
-                      className={cn(
-                        'block py-1 text-sm transition-all duration-300',
-                        activeItemId === category.id || parentOfActive === category.id
-                          ? 'text-primary font-semibold'
-                          : 'text-muted-foreground hover:text-foreground'
-                      )}
-                    >
-                      {category.name}
-                    </a>
-                    {category.subcategories.length > 0 && (
-                      <ul className="pl-4 mt-2 space-y-2 border-l border-border ml-3">
-                        {category.subcategories.map(sub => (
-                          sub.name && sub.links.length > 0 && (
-                            <li key={`${sub.id}-toc`}>
-                              <a
-                                href={`#${sub.id}`}
-                                onClick={(e) => handleTocClick(e, sub.id)}
-                                className={cn(
-                                  'block py-1 text-xs transition-all duration-300',
-                                  activeItemId === sub.id
-                                    ? 'text-accent font-medium'
-                                    : 'text-muted-foreground/80 hover:text-foreground'
-                                )}
-                              >
-                                {sub.name}
-                              </a>
-                            </li>
-                          )
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
+              <TableOfContents 
+                data={filteredData} 
+                activeItemId={activeItemId} 
+                parentOfActive={parentOfActive} 
+                onLinkClick={handleTocClick} 
+              />
             </div>
           </aside>
           
-          <main className="lg:col-span-9 py-12">
-            <header className="mb-8">
+          <main className="lg:col-span-9 pt-8 pb-12 lg:py-12">
+            {/* Desktop Header */}
+            <header className="mb-8 hidden lg:block">
               <h1 className="text-5xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
                 GOONMOVEMENT
               </h1>
               <p className="text-lg text-muted-foreground mt-2">A curated list of resources.</p>
             </header>
 
-            <div className="relative mb-12">
+            <div className="relative mb-8 lg:mb-12">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 type="text"
                 placeholder="Search all resources..."
-                className="w-full pl-12 h-12 text-lg bg-card border-2 border-border focus:border-primary/50 transition-colors"
+                className="w-full pl-12 h-11 text-md md:text-lg bg-card border-2 border-border focus:border-primary/50 transition-colors"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
 
-            <div className="space-y-16">
+            <div className="space-y-12 md:space-y-16">
               {filteredData.map((category) => (
                 <section
                   key={category.id}
@@ -259,7 +288,7 @@ export default function Home() {
                   ref={(el) => itemRefs.current.set(category.id, el)}
                   className="scroll-mt-24"
                 >
-                  <h2 className="text-3xl font-bold text-gray-200 border-b-2 border-primary/30 pb-3 mb-6">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-200 border-b-2 border-primary/30 pb-3 mb-6">
                     {category.name}
                   </h2>
                   <div className="space-y-8">
@@ -271,7 +300,7 @@ export default function Home() {
                           ref={(el) => itemRefs.current.set(sub.id, el)}
                           className="scroll-mt-24"
                         >
-                          {sub.name && <h3 className="text-xl font-semibold text-gray-400 mb-4">{sub.name}</h3>}
+                          {sub.name && <h3 className="text-lg md:text-xl font-semibold text-gray-400 mb-4">{sub.name}</h3>}
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {sub.links.map((link) => (
                               <a
@@ -307,7 +336,19 @@ export default function Home() {
           </main>
         </div>
       </div>
-      <Footer />
+       <footer className="mt-12 lg:mt-24 border-t border-border/20">
+        <div className="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm text-muted-foreground">
+          <p>&copy; {currentYear || ''} GOONMOVEMENT.</p>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="group inline-flex items-center gap-2 hover:text-foreground transition-colors"
+            aria-label="Scroll to top"
+          >
+            <span className="hidden sm:inline">Back to top</span>
+            <ArrowUp className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
+          </button>
+        </div>
+      </footer>
     </div>
   );
 }
