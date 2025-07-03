@@ -3,7 +3,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'GOONMOVEMENT',
-  description: 'A curated list of resources.',
+  description: 'Hitchhiker’s Guide to Gooning.',
 };
 
 export default function RootLayout({

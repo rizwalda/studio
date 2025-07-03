@@ -74,7 +74,7 @@ export const data: Category[] = [
         links: [
           { name: 'SexTB', url: 'https://sextb.net/', premium: true },
           { name: 'SupJav', url: 'https://supjav.com/', premium: true },
-          { name: 'JAVSeen', url: 'https://javseen.tv/', premium: true },
+          { name: 'JAVSeen', url: 'https://javseen.tv/'},
           { name: 'JAVGG', url: 'https://javgg.net/' },
           { name: 'JavGuru', url: 'https://jav.guru/' },
           { name: 'Javtiful', url: 'https://javtiful.com/' },
