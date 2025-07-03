@@ -39,20 +39,32 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const triggerPoint = window.innerHeight * 0.25;
-
       const sortedRefs = Array.from(itemRefs.current.entries())
         .filter(([, ref]) => ref)
         .sort(([, a], [, b]) => a!.offsetTop - b!.offsetTop);
+      
+      if (sortedRefs.length === 0) return;
 
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5) {
-        if (sortedRefs.length > 0) {
-          setActiveItemId(sortedRefs[sortedRefs.length - 1][0]);
-        }
+      const scrollY = window.scrollY;
+      const innerHeight = window.innerHeight;
+      const scrollHeight = document.documentElement.scrollHeight;
+
+      // Case 1: At the absolute bottom of the page
+      if (innerHeight + scrollY >= scrollHeight - 10) {
+        setActiveItemId(sortedRefs[sortedRefs.length - 1][0]);
         return;
       }
 
+      // Case 2: At the absolute top of the page
+      if (scrollY < 50) {
+        setActiveItemId(sortedRefs[0][0]);
+        return;
+      }
+
+      // Case 3: In the middle of the page
+      const triggerPoint = innerHeight * 0.3;
       let newActiveId = '';
+
       for (let i = sortedRefs.length - 1; i >= 0; i--) {
         const [id, ref] = sortedRefs[i];
         if (ref.getBoundingClientRect().top < triggerPoint) {
@@ -60,11 +72,11 @@ export default function Home() {
           break;
         }
       }
-      
-      if (!newActiveId && sortedRefs.length > 0) {
+
+      if (!newActiveId) {
         newActiveId = sortedRefs[0][0];
       }
-      
+
       setActiveItemId(newActiveId);
     };
 
