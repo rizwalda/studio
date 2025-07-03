@@ -79,7 +79,7 @@ const TableOfContents = ({
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState<Category[]>(data);
-  const [activeItemId, setActiveItemId] = useState<string>(data[0]?.id || '');
+  const [activeItemId, setActiveItemId] = useState<string>('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentYear, setCurrentYear] = useState<string>('');
   const [isMounted, setIsMounted] = useState(false);
@@ -94,6 +94,16 @@ export default function Home() {
   useEffect(() => {
     setIsMounted(true);
     setCurrentYear(new Date().getFullYear().toString());
+
+    const trackedItemIds = data.flatMap(category => [
+      category.id,
+      ...category.subcategories
+        .filter(sub => sub.links.length > 0 && sub.name)
+        .map(sub => sub.id)
+    ]);
+    if (trackedItemIds.length > 0) {
+      setActiveItemId(trackedItemIds[0]);
+    }
   }, []);
 
   const scrollToTop = () => {
@@ -352,7 +362,7 @@ export default function Home() {
                                 href={link.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group bg-card p-4 rounded-lg border border-border hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 flex justify-between items-start"
+                                className="group bg-card p-4 rounded-lg border border-border hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 flex justify-between items-center"
                               >
                                 <div>
                                     <div className="flex items-center mb-1">

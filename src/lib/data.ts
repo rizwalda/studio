@@ -27,9 +27,9 @@ export const data: Category[] = [
         id: 'index-main',
         name: '',
         links: [ 
-          { name: "Reddit Doesn't Like This Site", url: 'https://example.com', premium: true, description: 'Organize, stream, and share your media.' },
-          { name: 'Jellyfin', url: 'https://example.com', premium: true, description: 'The Free Software Media System.' },
-          { name: 'Stremio', url: 'https://example.com', premium: true, description: 'All your video content on one screen.' },
+          { name: "Reddit Doesn't Like This Site", url: 'https://www.reddit-doesnt-like-this.site/', premium: true },
+          { name: 'NSFW Subreddits', url: 'https://www.reddit.com/r/NSFW411/wiki/index', premium: true },
+          { name: 'PornBox', url: 'http://pornbox.org/', premium: true},
           { name: 'Kodi', url: 'https://example.com', premium: true, description: 'Open source home theater software.' },
           { name: 'Emby', url: 'https://example.com', premium: true, description: 'Personal media server.' },
           { name: 'Full HD Cinema', url: 'https://example.com', description: 'Watch movies in full HD.' },
