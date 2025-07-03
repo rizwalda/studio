@@ -1,11 +1,29 @@
 import type {Config} from 'tailwindcss';
 
+// Aceternity UI
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const {
+  default: flattenColorPalette,
+} = require('tailwindcss/lib/util/flattenColorPalette');
+
+function addVariablesForColors({addBase, theme}: any) {
+  const allColors = flattenColorPalette(theme('colors'));
+  const newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ':root': newVars,
+  });
+}
+
 export default {
   darkMode: ['class'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/aceternity-ui/dist/esm/index.js',
   ],
   theme: {
     extend: {
@@ -95,5 +113,5 @@ export default {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), addVariablesForColors],
 } satisfies Config;
