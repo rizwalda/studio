@@ -122,28 +122,35 @@ export const data: Category[] = [
         ]
       },
       {
-        id: 'tools-vcs',
-        name: 'Version Control',
+        id: 'download-communities',
+        name: 'Communities',
         links: [
-            { name: 'GitHub', url: 'https://github.com', description: 'The leading development platform.' },
-            { name: 'GitLab', url: 'https://gitlab.com', description: 'An open-source DevOps platform.' },
+            { name: 'Pornoslon', url: 'https://example.com' },
+            { name: 'PornBBS', url: 'https://example.com' },
+            { name: 'PornBB', url: 'https://example.com' },
+            { name: 'Eroticity', url: 'https://example.com' },
         ]
       },
       {
-        id: 'tools-editors',
-        name: 'Code Editors',
+        id: 'download-games',
+        name: 'Games',
         links: [
-            { name: 'VS Code', url: 'https://code.visualstudio.com', description: 'The most popular code editor.' },
-            { name: 'JetBrains IDEs', url: 'https://www.jetbrains.com/', description: 'A suite of powerful IDEs.' },
+            { name: 'F95Zone', url: 'https://example.com', premium: true },
+            { name: 'Nyaa Sukebei', url: 'https://example.com', premium: true },
+            { name: 'Anime-Sharing', url: 'https://example.com', premium: true, description: 'Hentai Games DDL' },
+            { name: 'VNPocket', url: 'https://example.com' },
         ]
       },
       {
-        id: 'tools-search',
-        name: 'Search & Reference',
+        id: 'download-torrents',
+        name: 'Torrents',
         links: [
-            { name: 'Google', url: 'https://google.com', description: 'The worlds leading search engine.' },
-            { name: 'DuckDuckGo', url: 'https://duckduckgo.com', description: 'Privacy-focused search engine.' },
-            { name: 'Wikipedia', url: 'https://wikipedia.org', description: 'The free encyclopedia.' },
+            { name: 'myporn.club', url: 'https://example.com', premium: true },
+            { name: 'XXXCLub', url: 'https://example.com', premium: true },
+            { name: 'Nyaa Sukebei', url: 'https://example.com', premium: true, description: 'JAV' },
+            { name: 'ProjectJav', url: 'https://example.com', premium: true, description: 'JAV' },
+            { name: 'OneJAV', url: 'https://example.com', premium: true, description: 'JAV' },
+            { name: 'General Torrent Sites', url: 'https://example.com' },
         ]
       }
     ]
