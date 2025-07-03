@@ -144,6 +144,7 @@ export const data: Category[] = [
             { name: 'Express.js', url: 'https://example.com', description: 'Fast, unopinionated, minimalist web framework for Node.js.' },
             { name: 'Django', url: 'https://example.com', description: 'The web framework for perfectionists with deadlines.' },
             { name: 'Firebase', url: 'https://example.com', premium: true, description: 'An app development platform that helps you build and grow apps.' },
+            { name: 'PostgreSQL', url: 'https://example.com', description: 'A powerful, open source object-relational database system.' },
         ]}
     ]
   },
@@ -156,6 +157,7 @@ export const data: Category[] = [
             { name: 'Dribbble', url: 'https://example.com', description: 'Show and tell for designers.' },
             { name: 'Unsplash', url: 'https://example.com', description: 'The internet’s source of freely-usable images.' },
             { name: 'Coolors', url: 'https://example.com', description: 'The super fast color palettes generator.' },
+            { name: 'Adobe Color', url: 'https://example.com', description: 'Create color palettes with the color wheel.' },
         ]}
     ]
   },
@@ -167,6 +169,8 @@ export const data: Category[] = [
             { name: 'Product Hunt', url: 'https://example.com', description: 'The place to discover your next favorite things.' },
             { name: 'Indie Hackers', url: 'https://example.com', description: 'Work together to build profitable online businesses.' },
             { name: 'Hacker News', url: 'https://example.com', description: 'A social news website focusing on computer science and entrepreneurship.' },
+            { name: 'Reddit', url: 'https://example.com', description: 'The front page of the internet.' },
+            { name: 'Dev.to', url: 'https://example.com', description: 'A community of software developers.' },
         ]}
     ]
   }
