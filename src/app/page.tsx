@@ -14,24 +14,19 @@ const TableOfContents = ({
   activeItemId,
   parentOfActive,
   onLinkClick,
+  onTitleClick,
 }: {
   data: Category[];
   activeItemId: string;
   parentOfActive: string | null;
   onLinkClick: (e: React.MouseEvent<HTMLAnchorElement>, id: string) => void;
+  onTitleClick: () => void;
 }) => {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
-
   return (
     <>
       <h4
-        className="font-semibold text-xl mb-4 text-foreground cursor-pointer hover:text-primary transition-colors"
-        onClick={scrollToTop}
+        className="font-semibold text-2xl mb-4 text-foreground cursor-pointer hover:text-primary transition-colors"
+        onClick={onTitleClick}
       >
         Table of Contents
       </h4>
@@ -42,7 +37,7 @@ const TableOfContents = ({
               href={`#${category.id}`}
               onClick={(e) => onLinkClick(e, category.id)}
               className={cn(
-                'block py-1.5 text-base transition-all duration-300',
+                'block py-1.5 text-lg transition-all duration-300',
                 activeItemId === category.id || parentOfActive === category.id
                   ? 'text-primary font-semibold'
                   : 'text-muted-foreground hover:text-foreground'
@@ -59,7 +54,7 @@ const TableOfContents = ({
                         href={`#${sub.id}`}
                         onClick={(e) => onLinkClick(e, sub.id)}
                         className={cn(
-                          'block py-1.5 text-sm transition-all duration-300',
+                          'block py-1.5 text-base transition-all duration-300',
                           activeItemId === sub.id
                             ? 'text-accent font-medium'
                             : 'text-muted-foreground/80 hover:text-foreground'
@@ -95,9 +90,15 @@ export default function Home() {
   activeItemIdRef.current = activeItemId;
   
   useEffect(() => {
-    // This effect runs only on the client after hydration
     setCurrentYear(new Date().getFullYear().toString());
   }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
 
   // This effect handles filtering based on the search term. It is working correctly.
@@ -243,9 +244,11 @@ export default function Home() {
       {/* Mobile Header */}
       <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border">
           <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center h-16">
-              <h1 className="text-xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
-                GOONMOVEMENT
-              </h1>
+              <button onClick={scrollToTop} className="focus:outline-none focus:ring-2 focus:ring-ring rounded-sm">
+                <h1 className="text-xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+                  GOONMOVEMENT
+                </h1>
+              </button>
               <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                   <SheetTrigger asChild>
                       <Button variant="ghost" size="icon">
@@ -254,9 +257,9 @@ export default function Home() {
                       </Button>
                   </SheetTrigger>
                   <SheetContent side="left" className="w-full max-w-xs p-6 bg-card border-r-border overflow-y-auto">
-                      <SheetHeader className="sr-only">
-                        <SheetTitle>Menu</SheetTitle>
-                        <SheetDescription>
+                      <SheetHeader>
+                        <SheetTitle className="sr-only">Menu</SheetTitle>
+                        <SheetDescription className="sr-only">
                           Table of contents for the page.
                         </SheetDescription>
                       </SheetHeader>
@@ -264,7 +267,8 @@ export default function Home() {
                         data={filteredData} 
                         activeItemId={activeItemId} 
                         parentOfActive={parentOfActive} 
-                        onLinkClick={handleTocClick} 
+                        onLinkClick={handleTocClick}
+                        onTitleClick={scrollToTop}
                       />
                   </SheetContent>
               </Sheet>
@@ -280,7 +284,8 @@ export default function Home() {
                 data={filteredData} 
                 activeItemId={activeItemId} 
                 parentOfActive={parentOfActive} 
-                onLinkClick={handleTocClick} 
+                onLinkClick={handleTocClick}
+                onTitleClick={scrollToTop}
               />
             </div>
           </aside>
@@ -363,7 +368,7 @@ export default function Home() {
       </div>
        <footer className="mt-12 lg:mt-24 border-t border-border/20">
         <div className="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear || new Date().getFullYear().toString()} GOONMOVEMENT.</p>
+          <p>&copy; {currentYear ? currentYear : ''} GOONMOVEMENT.</p>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="group inline-flex items-center gap-2 hover:text-foreground transition-colors"
