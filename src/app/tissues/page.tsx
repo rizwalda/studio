@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Box, Home } from 'lucide-react';
+import { Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -21,7 +21,6 @@ export default function TissuePapersComingSoon() {
           isMounted ? "opacity-100" : "opacity-0 translate-y-5"
         )}
       >
-        <Box className="w-16 h-16 mb-6 text-primary mx-auto" />
         <h1 className="text-5xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent mb-4">
           Tissue Papers, Please!
         </h1>
