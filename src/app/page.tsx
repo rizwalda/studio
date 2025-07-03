@@ -46,32 +46,35 @@ export default function Home() {
         .filter(([, ref]) => ref)
         .sort(([, a], [, b]) => a!.offsetTop - b!.offsetTop);
       
-      // Special case for the bottom of the page
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+      // A more robust check for the bottom of the page.
+      // We check if the scroll position is within a few pixels of the bottom.
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5) {
+        // If so, force the active ID to be the last item.
         currentId = sortedRefs[sortedRefs.length - 1]?.[0] || '';
       } else {
-        // Find the last item that is above the scroll position
+        // Otherwise, find the last item whose top is above the scroll threshold.
         for (const [id, ref] of sortedRefs) {
           if (ref && ref.offsetTop <= scrollPosition) {
             currentId = id;
           } else {
-            break;
+            break; // Since the list is sorted, we can exit early.
           }
         }
       }
       
-      if (activeItemId !== currentId) {
-        setActiveItemId(currentId);
-      }
+      // Set the active item. React will handle not re-rendering if the ID is the same.
+      setActiveItemId(currentId);
     };
     
     window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run on initial load
     handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [activeItemId, filteredData]);
+    // The effect only needs to re-run if the filtered data changes the elements on the page.
+  }, [filteredData]);
 
   const getParentId = (subId: string): string | null => {
     for (const category of data) {
