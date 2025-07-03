@@ -198,56 +198,52 @@ export const data: Category[] = [
     ]
   },
   {
-    id: 'backend-dev',
-    name: 'Backend Development',
+    id: 'erotica-fanfiction',
+    name: 'Erotica / Fanfiction',
     subcategories: [
-        {id: 'backend-main', name: '', links: [
-            { name: 'Node.js', url: 'https://example.com', description: 'JavaScript runtime built on Chrome\'s V8 engine.' },
-            { name: 'Express.js', url: 'https://example.com', description: 'Fast, unopinionated, minimalist web framework for Node.js.' },
-            { name: 'Django', url: 'https://example.com', description: 'The web framework for perfectionists with deadlines.' },
-            { name: 'Firebase', url: 'https://example.com', premium: true, description: 'An app development platform that helps you build and grow apps.' },
-            { name: 'PostgreSQL', url: 'https://example.com', description: 'A powerful, open source object-relational database system.' },
+        {id: 'erotica-main', name: '', links: [
+            { name: 'Literotica', url: 'https://example.com', premium: true, description: 'Fictional' },
+            { name: 'Chyoa', url: 'https://example.com', description: 'Fictional' },
+            { name: 'Bellesa', url: 'https://example.com', description: 'Fictional' },
+            { name: 'SexualStories', url: 'https://example.com', description: 'Fictional' },
+            { name: 'TheFetLibrary', url: 'https://example.com', description: 'Fictional' },
+            { name: 'QuestionableQuestingQ', url: 'https://example.com', description: 'Fictional / Signup Required' },
+            { name: 'Adult-Fanfiction', url: 'https://example.com', description: 'Fictional' },
+            { name: 'HyperDreams', url: 'https://example.com', description: 'Fictional / Interactive' },
         ]}
     ]
   },
   {
-    id: 'design-resources',
-    name: 'Design Resources',
+    id: 'lgbtq',
+    name: 'LGBTQ+',
     subcategories: [
-        {id: 'design-main', name: '', links: [
-            { name: 'Figma', url: 'https://example.com', description: 'The collaborative interface design tool.' },
-            { name: 'Dribbble', url: 'https://example.com', description: 'Show and tell for designers.' },
-            { name: 'Unsplash', url: 'https://example.com', description: 'The internet’s source of freely-usable images.' },
-            { name: 'Coolors', url: 'https://example.com', description: 'The super fast color palettes generator.' },
-            { name: 'Adobe Color', url: 'https://example.com', description: 'Create color palettes with the color wheel.' },
-            { name: 'Canva', url: 'https://example.com', description: 'Easy-to-use graphic design platform.' },
-            { name: 'Behance', url: 'https://example.com', description: 'Showcase and discover creative work.' },
-            { name: 'Icons8', url: 'https://example.com', description: 'Free icons, photos, and illustrations.' },
-            { name: 'Google Fonts', url: 'https://example.com', description: 'A library of free licensed fonts.' },
-            { name: 'Remove.bg', url: 'https://example.com', description: 'Remove image backgrounds automatically.' },
+        {id: 'lgbtq-main', name: '', links: [
+            { name: 'MyGaySites', url: 'https://example.com', description: 'Gay Porn Site Index' },
+            { name: 'PlayHDPorn Gay', url: 'https://example.com' },
+            { name: 'Boyfriend.tv', url: 'https://example.com' },
+            { name: 'Gold Gay', url: 'https://example.com' },
+            { name: 'JAVBoys', url: 'https://example.com', description: 'Gay JAV' },
+            { name: 'Gay Torrents', url: 'https://example.com', description: 'Torrents / Use VPN' },
+            { name: 'Yupdates', url: 'https://example.com', description: 'Gay Porn Artwork / Drives / Discord' },
+            { name: 'PBC', url: 'https://example.com', description: 'Gay Porn Encyclopedia' },
+            { name: 'MyReadingManga', url: 'https://example.com', description: 'LGBTQ+ Hentai' },
+            { name: 'Nifty', url: 'https://example.com', description: 'LGBT / Fictional' },
         ]}
     ]
   },
   {
-    id: 'miscellaneous',
-    name: 'Miscellaneous',
+    id: 'tools',
+    name: 'Tools',
     subcategories: [
-        {id: 'misc-main', name: '', links: [
-            { name: 'Product Hunt', url: 'https://example.com', description: 'The place to discover your next favorite things.' },
-            { name: 'Indie Hackers', url: 'https://example.com', description: 'Work together to build profitable online businesses.' },
-            { name: 'Hacker News', url: 'https://example.com', description: 'A social news website focusing on computer science and entrepreneurship.' },
-            { name: 'Reddit', url: 'https://example.com', description: 'The front page of the internet.' },
-            { name: 'Dev.to', url: 'https://example.com', description: 'A community of software developers.' },
-            { name: 'Medium', url: 'https://example.com', description: 'An online publishing platform with a wide range of topics.' },
-            { name: 'Stack Overflow', url: 'https://example.com', description: 'The largest community for developers to learn and share knowledge.' },
-            { name: 'Lobsters', url: 'https://example.com', description: 'A computing-focused community sharing links and discussions.' },
-            { name: 'Slashdot', url: 'https://example.com', description: 'News for nerds, stuff that matters.' },
-            { name: 'TechCrunch', url: 'https://example.com', description: 'Breaking tech news and startup profiles.' },
-            { name: 'The Verge', url: 'https://example.com', description: 'Technology news, reviews, and media network.' },
-            { name: 'Ars Technica', url: 'https://example.com', description: 'In-depth news and opinions on technology, science, and more.' },
-            { name: 'freeCodeCamp', url: 'https://example.com', description: 'Learn to code for free. Build projects. Earn certifications.' },
-            { name: 'CSS-Tricks', url: 'https://example.com', description: 'Daily articles about CSS, HTML, JavaScript, and all things web development.' },
-            { name: 'Smashing Magazine', url: 'https://example.com', description: 'For professional web designers and developers.' },
+        {id: 'tools-main', name: '', links: [
+            { name: 'Stash', url: 'https://example.com', premium: true, description: 'Porn File Manager' },
+            { name: 'Anal Sex Guide', url: 'https://example.com', premium: true, description: 'Anal Sex Guide' },
+            { name: 'PornStarByFace', url: 'https://example.com', premium: true, description: 'NSFW Image Reverse Search' },
+            { name: 'SauceNao', url: 'https://example.com', premium: true, description: 'Fictional NSFW Reverse Image Search' },
+            { name: 'Bypass Subreddit Blocks', url: 'https://example.com', premium: true },
+            { name: 'Javinizer', url: 'https://example.com', description: 'JAV File Organizer' },
+            { name: 'DeepMosaics', url: 'https://example.com', description: 'Remove Mosaics from Porn' },
+            { name: 'ThePornDB', url: 'https://example.com', description: 'Porn Metadata' },
         ]}
     ]
   }
