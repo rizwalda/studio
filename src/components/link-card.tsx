@@ -41,6 +41,7 @@ export function LinkCard({ link }: LinkCardProps) {
         </CardHeader>
         <CardContent className="p-0 pt-2 flex-grow">
           <CardDescription
+            className="prose prose-sm dark:prose-invert max-w-none [&_p]:m-0"
             dangerouslySetInnerHTML={{ __html: link.description }}
           />
         </CardContent>

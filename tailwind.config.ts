@@ -113,5 +113,10 @@ export default {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), addVariablesForColors],
+  plugins: [
+    require('tailwindcss-animate'),
+    addVariablesForColors,
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+  ],
 } satisfies Config;
