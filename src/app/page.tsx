@@ -83,7 +83,7 @@ const TableOfContents = ({
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState<Category[]>(data);
-  const [activeItemId, setActiveItemId] = useState<string>('');
+  const [activeItemId, setActiveItemId] = useState<string>(data[0]?.id || '');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentYear, setCurrentYear] = useState<string | null>(null);
 
@@ -338,7 +338,7 @@ export default function Home() {
       </div>
        <footer className="mt-12 lg:mt-24 border-t border-border/20">
         <div className="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear || ''} GOONMOVEMENT.</p>
+          <p>&copy; {currentYear || new Date().getFullYear().toString()} GOONMOVEMENT.</p>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="group inline-flex items-center gap-2 hover:text-foreground transition-colors"
