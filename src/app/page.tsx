@@ -82,6 +82,7 @@ export default function Home() {
   const [activeItemId, setActiveItemId] = useState<string>(data[0]?.id || '');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentYear, setCurrentYear] = useState<string>('');
+  const [isMounted, setIsMounted] = useState(false);
 
   const itemRefs = useRef(new Map<string, HTMLElement | null>());
   const isClickScrolling = useRef(false);
@@ -90,6 +91,10 @@ export default function Home() {
   const activeItemIdRef = useRef(activeItemId);
   activeItemIdRef.current = activeItemId;
   
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   useEffect(() => {
     setCurrentYear(new Date().getFullYear().toString());
   }, []);
@@ -101,8 +106,6 @@ export default function Home() {
     });
   };
 
-
-  // This effect handles filtering based on the search term. It is working correctly.
   useEffect(() => {
     const lowercasedFilter = searchTerm.toLowerCase();
     if (!lowercasedFilter) {
@@ -126,7 +129,6 @@ export default function Home() {
     }).filter((category): category is Category => category !== null);
 
     setFilteredData(filtered);
-    // On search, if there's results, set the active item to the first result
     if (filtered.length > 0) {
         const firstCategoryId = filtered[0].id;
         const firstSubcategoryId = filtered[0].subcategories.find(s => s.links.length > 0)?.id;
@@ -134,8 +136,6 @@ export default function Home() {
     }
   }, [searchTerm]);
 
-
-  // **REFINED SCROLL AND CLICK LOGIC FOR SMOOTHNESS**
   useEffect(() => {
     const trackedItemIds = filteredData.flatMap(category => [
       category.id,
@@ -146,32 +146,26 @@ export default function Home() {
 
     if (trackedItemIds.length === 0) return;
 
-    // Set initial active item without causing hydration error
     if (typeof window !== 'undefined' && window.scrollY < 100) {
       setActiveItemId(trackedItemIds[0]);
     }
 
     const handleScroll = () => {
-      // Don't run scroll-based highlighting if a click-scroll is in progress
       if (isClickScrolling.current) return;
 
       let currentActiveId = activeItemIdRef.current;
       
-      // At the very bottom, highlight the last item
       if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 10) {
         currentActiveId = trackedItemIds[trackedItemIds.length - 1];
       } else {
-        // Otherwise, find the last item that passed the activation line
-        const fromTop = window.innerHeight * 0.3; // 30% offset
+        const fromTop = window.innerHeight * 0.3;
         
-        // Find the best candidate from visible elements
         let bestCandidate = '';
         for (const id of trackedItemIds) {
           const element = itemRefs.current.get(id);
           if (element && element.getBoundingClientRect().top < fromTop) {
             bestCandidate = id;
           } else {
-            // Since elements are in order, we can break early
             break; 
           }
         }
@@ -180,7 +174,6 @@ export default function Home() {
         }
       }
       
-      // At the very top, highlight the first item
       if (window.scrollY < 100 && trackedItemIds.length > 0) {
           currentActiveId = trackedItemIds[0];
       }
@@ -192,7 +185,6 @@ export default function Home() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     
-    // Initial check in a timeout to avoid race conditions on load
     const initialCheckTimeout = setTimeout(() => {
       handleScroll();
     }, 100);
@@ -204,24 +196,22 @@ export default function Home() {
       }
       clearTimeout(initialCheckTimeout);
     };
-  }, [filteredData]); // Effect only re-runs when data changes, not on every highlight
+  }, [filteredData]);
 
-  // Handles clicks on the Table of Contents
   const handleTocClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault(); // Prevent default anchor jump
-    setActiveItemId(id); // Set active state immediately for responsiveness
-    setIsMenuOpen(false); // Close mobile menu on click
+    e.preventDefault();
+    setActiveItemId(id);
+    setIsMenuOpen(false);
     
-    isClickScrolling.current = true; // Set flag to disable scroll listener
+    isClickScrolling.current = true;
     
-    // Clear any existing timeout to avoid premature reset
     if (scrollTimeout.current) {
         clearTimeout(scrollTimeout.current);
     }
     
     const element = document.getElementById(id);
     if (element) {
-      const offset = 96; // Height of sticky header
+      const offset = 96;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -233,13 +223,11 @@ export default function Home() {
       });
     }
 
-    // Reset the flag after scrolling is likely complete (1s)
     scrollTimeout.current = setTimeout(() => {
         isClickScrolling.current = false;
     }, 1000);
   };
 
-  // Helper to determine if a subcategory's parent is the active item
   const getParentId = (subId: string): string | null => {
     for (const category of data) {
       if (category.subcategories.some(s => s.id === subId)) {
@@ -253,7 +241,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
-      {/* Mobile Header */}
       <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border">
           <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center h-20">
               <button onClick={scrollToTop} className="focus:outline-none focus:ring-2 focus:ring-ring rounded-sm">
@@ -298,7 +285,6 @@ export default function Home() {
 
       <div className="flex-grow">
         <div className="max-w-screen-xl mx-auto lg:grid lg:grid-cols-12 lg:gap-x-12 px-4 sm:px-6 lg:px-8">
-          {/* Desktop Sidebar */}
           <aside className="hidden lg:block lg:col-span-3 py-12">
             <div className="sticky top-24">
               <TableOfContents 
@@ -311,8 +297,10 @@ export default function Home() {
             </div>
           </aside>
           
-          <main className="lg:col-span-9 pt-8 pb-12 lg:py-12">
-            {/* Desktop Header */}
+          <main className={cn(
+            "lg:col-span-9 pt-8 pb-12 lg:py-12 transition-all duration-500 ease-out",
+            isMounted ? 'opacity-100' : 'opacity-0 translate-y-4'
+          )}>
             <header className="mb-8 hidden lg:block">
               <h1 className="text-5xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
                 GOONMOVEMENT
@@ -395,7 +383,10 @@ export default function Home() {
           </main>
         </div>
       </div>
-       <footer className="mt-12 lg:mt-24 border-t border-border/20">
+       <footer className={cn(
+        "mt-12 lg:mt-24 border-t border-border/20 transition-all duration-500 ease-out",
+        isMounted ? 'opacity-100' : 'opacity-0 translate-y-4'
+       )}>
         <div className="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm text-muted-foreground">
           <p>&copy; {currentYear} GOONMOVEMENT.</p>
           <button
