@@ -6,7 +6,7 @@ import { Star, ArrowUpRight, Search, ArrowUp, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 
 // Reusable Table of Contents Component
 const TableOfContents = ({
@@ -123,6 +123,12 @@ export default function Home() {
     }).filter((category): category is Category => category !== null);
 
     setFilteredData(filtered);
+    // On search, if there's results, set the active item to the first result
+    if (filtered.length > 0) {
+        const firstCategoryId = filtered[0].id;
+        const firstSubcategoryId = filtered[0].subcategories.find(s => s.links.length > 0)?.id;
+        setActiveItemId(firstSubcategoryId || firstCategoryId);
+    }
   }, [searchTerm]);
 
 
@@ -141,7 +147,7 @@ export default function Home() {
       // Don't run scroll-based highlighting if a click-scroll is in progress
       if (isClickScrolling.current) return;
 
-      let currentActiveId = '';
+      let currentActiveId = activeItemIdRef.current;
       
       // At the very bottom, highlight the last item
       if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 10) {
@@ -149,13 +155,20 @@ export default function Home() {
       } else {
         // Otherwise, find the last item that passed the activation line
         const fromTop = window.innerHeight * 0.3; // 30% offset
+        
+        // Find the best candidate from visible elements
+        let bestCandidate = '';
         for (const id of trackedItemIds) {
           const element = itemRefs.current.get(id);
           if (element && element.getBoundingClientRect().top < fromTop) {
-            currentActiveId = id;
+            bestCandidate = id;
           } else {
+            // Since elements are in order, we can break early
             break; 
           }
+        }
+        if (bestCandidate) {
+          currentActiveId = bestCandidate;
         }
       }
       
@@ -235,6 +248,12 @@ export default function Home() {
                       </Button>
                   </SheetTrigger>
                   <SheetContent side="left" className="w-full max-w-xs p-6 bg-card border-r-border overflow-y-auto">
+                      <SheetHeader>
+                        <SheetTitle className="sr-only">Menu</SheetTitle>
+                        <SheetDescription className="sr-only">
+                          Table of contents for the page.
+                        </SheetDescription>
+                      </SheetHeader>
                       <TableOfContents 
                         data={filteredData} 
                         activeItemId={activeItemId} 
