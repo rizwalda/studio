@@ -51,7 +51,6 @@ export const data: Category[] = [
           { name: 'SexyPorn', url: 'https://www.sxyprn.com/', premium: true },
           { name: 'WatchPorn.to', url: 'https://watchporn.to/', premium: true },
           { name: 'Porninja', url: 'https://www.por.ninja/' },
-          { name: 'PornHoarder, 2', url: 'https://pornhoarder.tv/' },
           { name: 'Noodlemagazine', url: 'https://noodlemagazine.com/', description: 'Search Engine' },
           { name: 'iXXX or PornMD', url: 'https://example.com', description: 'Aggregators' }
         ],
@@ -66,7 +65,6 @@ export const data: Category[] = [
           { name: 'EroticMV', url: 'https://example.com' },
           { name: 'RareLust', url: 'https://example.com' },
           { name: 'PandaMovies', url: 'https://example.com' },
-          { name: 'SleazeMovies', url: 'https://example.com' },
         ],
       },
       {
@@ -118,7 +116,7 @@ export const data: Category[] = [
             { name: 'General DDL Sites', url: 'https://example.com', premium: true },
             { name: 'Search4Porn', url: 'https://example.com', description: 'NSFW File Search' },
             { name: 'AEBN Downloader', url: 'https://example.com', description: 'Downloader for AEBN' },
-            { name: 'StashDB', url: 'https://example.com', description: 'Porn Database / Invite' },
+            { name: 'StashDB', url: 'https://example.com', description: 'Porn Database' },
         ]
       },
       {
@@ -202,14 +200,14 @@ export const data: Category[] = [
     name: 'Erotica / Fanfiction',
     subcategories: [
         {id: 'erotica-main', name: '', links: [
-            { name: 'Literotica', url: 'https://example.com', premium: true, description: 'Fictional' },
-            { name: 'Chyoa', url: 'https://example.com', description: 'Fictional' },
-            { name: 'Bellesa', url: 'https://example.com', description: 'Fictional' },
-            { name: 'SexualStories', url: 'https://example.com', description: 'Fictional' },
-            { name: 'TheFetLibrary', url: 'https://example.com', description: 'Fictional' },
-            { name: 'QuestionableQuestingQ', url: 'https://example.com', description: 'Fictional / Signup Required' },
-            { name: 'Adult-Fanfiction', url: 'https://example.com', description: 'Fictional' },
-            { name: 'HyperDreams', url: 'https://example.com', description: 'Fictional / Interactive' },
+            { name: 'Literotica', url: 'https://www.literotica.com/', premium: true, description: 'Fictional' },
+            { name: 'Chyoa', url: 'https://chyoa.com/', description: 'Fictional' },
+            { name: 'Bellesa', url: 'https://www.bellesa.co/story/all', description: 'Fictional' },
+            { name: 'SexualStories', url: 'https://sexualstories.club/', description: 'Fictional' },
+            { name: 'TheFetLibrary', url: 'https://www.thefetlibrary.com/', description: 'Fictional' },
+            { name: 'QuestionableQuestingQ', url: 'https://forum.questionablequesting.com/', description: 'Fictional / Signup Required' },
+            { name: 'Adult-Fanfiction', url: 'https://www.adult-fanfiction.org/', description: 'Fictional' },
+            { name: 'HyperDreams', url: 'https://www.hyperdreams.com/', description: 'Fictional / Interactive' },
         ]}
     ]
   },
@@ -218,16 +216,16 @@ export const data: Category[] = [
     name: 'LGBTQ+',
     subcategories: [
         {id: 'lgbtq-main', name: '', links: [
-            { name: 'MyGaySites', url: 'https://example.com', description: 'Gay Porn Site Index' },
-            { name: 'PlayHDPorn Gay', url: 'https://example.com' },
-            { name: 'Boyfriend.tv', url: 'https://example.com' },
-            { name: 'Gold Gay', url: 'https://example.com' },
-            { name: 'JAVBoys', url: 'https://example.com', description: 'Gay JAV' },
-            { name: 'Gay Torrents', url: 'https://example.com', description: 'Torrents / Use VPN' },
-            { name: 'Yupdates', url: 'https://example.com', description: 'Gay Porn Artwork / Drives / Discord' },
-            { name: 'PBC', url: 'https://example.com', description: 'Gay Porn Encyclopedia' },
-            { name: 'MyReadingManga', url: 'https://example.com', description: 'LGBTQ+ Hentai' },
-            { name: 'Nifty', url: 'https://example.com', description: 'LGBT / Fictional' },
+            { name: 'MyGaySites', url: 'https://mygaysites.com/', description: 'Gay Porn Site Index' },
+            { name: 'PlayHDPorn Gay', url: 'https://www.playhdporn.com/categories/gay/' },
+            { name: 'Boyfriend.tv', url: 'https://boyfriend.tv/' },
+            { name: 'Gold Gay', url: 'https://www.gold-gay.com/' },
+            { name: 'JAVBoys', url: 'https://javboys.com/', description: 'Gay JAV' },
+            { name: 'Gay Torrents', url: 'https://www.gay-torrents.net/', description: 'Torrents / Use VPN' },
+            { name: 'Yupdates', url: 'https://yupdates.neocities.org/', description: 'Gay Porn Artwork' },
+            { name: 'PBC', url: 'https://pbc.xxx/', description: 'Gay Porn Encyclopedia' },
+            { name: 'MyReadingManga', url: 'https://fictionmania.tv/', description: 'LGBTQ+ Hentai' },
+            { name: 'Nifty', url: 'https://www.nifty.org/nifty/', description: 'LGBT / Fictional' },
         ]}
     ]
   },
@@ -236,14 +234,14 @@ export const data: Category[] = [
     name: 'Tools',
     subcategories: [
         {id: 'tools-main', name: '', links: [
-            { name: 'Stash', url: 'https://example.com', premium: true, description: 'Porn File Manager' },
+            { name: 'Stash', url: 'https://stashapp.cc/', premium: true, description: 'Porn File Manager' },
             { name: 'Anal Sex Guide', url: 'https://example.com', premium: true, description: 'Anal Sex Guide' },
-            { name: 'PornStarByFace', url: 'https://example.com', premium: true, description: 'NSFW Image Reverse Search' },
-            { name: 'SauceNao', url: 'https://example.com', premium: true, description: 'Fictional NSFW Reverse Image Search' },
-            { name: 'Bypass Subreddit Blocks', url: 'https://example.com', premium: true },
-            { name: 'Javinizer', url: 'https://example.com', description: 'JAV File Organizer' },
-            { name: 'DeepMosaics', url: 'https://example.com', description: 'Remove Mosaics from Porn' },
-            { name: 'ThePornDB', url: 'https://example.com', description: 'Porn Metadata' },
+            { name: 'PornStarByFace', url: 'https://pornstarbyface.com/', premium: true, description: 'NSFW Image Reverse Search' },
+            { name: 'SauceNao', url: 'https://saucenao.com/', premium: true, description: 'Fictional NSFW Reverse Image Search' },
+            { name: 'Bypass Subreddit Blocks', url: 'https://pastebin.com/gAAEQnqn', premium: true },
+            { name: 'Javinizer', url: 'https://github.com/javinizer/Javinizer', description: 'JAV File Organizer' },
+            { name: 'DeepMosaics', url: 'https://github.com/HypoX64/DeepMosaics', description: 'Remove Mosaics from Porn' },
+            { name: 'ThePornDB', url: 'https://theporndb.net/', description: 'Porn Metadata' },
         ]}
     ]
   }
