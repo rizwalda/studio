@@ -158,6 +158,11 @@ export const data: Category[] = [
             { name: 'Unsplash', url: 'https://example.com', description: 'The internet’s source of freely-usable images.' },
             { name: 'Coolors', url: 'https://example.com', description: 'The super fast color palettes generator.' },
             { name: 'Adobe Color', url: 'https://example.com', description: 'Create color palettes with the color wheel.' },
+            { name: 'Canva', url: 'https://example.com', description: 'Easy-to-use graphic design platform.' },
+            { name: 'Behance', url: 'https://example.com', description: 'Showcase and discover creative work.' },
+            { name: 'Icons8', url: 'https://example.com', description: 'Free icons, photos, and illustrations.' },
+            { name: 'Google Fonts', url: 'https://example.com', description: 'A library of free licensed fonts.' },
+            { name: 'Remove.bg', url: 'https://example.com', description: 'Remove image backgrounds automatically.' },
         ]}
     ]
   },
