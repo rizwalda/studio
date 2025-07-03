@@ -81,7 +81,8 @@ export default function Home() {
   const [filteredData, setFilteredData] = useState<Category[]>(data);
   const [activeItemId, setActiveItemId] = useState<string>('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentTime, setCurrentTime] = useState<string>('');
+  const [currentDate, setCurrentDate] = useState('');
+  const [currentTime, setCurrentTime] = useState('');
   const [isMounted, setIsMounted] = useState(false);
 
   const itemRefs = useRef(new Map<string, HTMLElement | null>());
@@ -95,7 +96,9 @@ export default function Home() {
     setIsMounted(true);
     
     const timer = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString());
+      const now = new Date();
+      setCurrentDate(now.toLocaleDateString());
+      setCurrentTime(now.toLocaleTimeString());
     }, 1000);
 
     const trackedItemIds = data.flatMap(category => [
@@ -400,7 +403,7 @@ export default function Home() {
         isMounted ? 'opacity-100' : 'opacity-0 translate-y-4'
        )}>
         <div className="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm text-muted-foreground">
-          <p>{currentTime}</p>
+          <p>{currentDate && currentTime ? `${currentDate}, ${currentTime}` : ''}</p>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="group inline-flex items-center gap-2 hover:text-foreground transition-colors"
