@@ -42,18 +42,24 @@ export default function Home() {
       const scrollPosition = window.scrollY + 200;
       let currentId = '';
 
-      itemRefs.current.forEach((ref, id) => {
+      const sortedRefs = Array.from(itemRefs.current.entries())
+        .filter(([, ref]) => ref)
+        .sort(([, a], [, b]) => a!.offsetTop - b!.offsetTop);
+      
+      for (const [id, ref] of sortedRefs) {
         if (ref && scrollPosition >= ref.offsetTop) {
           currentId = id;
+        } else {
+          break;
         }
-      });
+      }
       
       if (activeItemId !== currentId) {
         setActiveItemId(currentId);
       }
     };
     
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
     return () => {
@@ -74,8 +80,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row px-4 sm:px-6 lg:px-8">
-        <main className="w-full lg:w-3/4 py-12 lg:pr-16">
+      <div className="max-w-screen-xl mx-auto lg:grid lg:grid-cols-12 lg:gap-x-12 px-4 sm:px-6 lg:px-8">
+        <main className="lg:col-span-9 py-12">
           <header className="mb-8">
             <h1 className="text-5xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
               GOONMOVEMENT
@@ -149,35 +155,35 @@ export default function Home() {
           </div>
         </main>
 
-        <aside className="hidden lg:block w-1/4 py-12">
+        <aside className="hidden lg:block lg:col-span-3 py-12">
           <div className="sticky top-24">
             <h4 className="font-semibold text-lg mb-4 text-foreground">Table of Contents</h4>
-            <ul className="space-y-1">
+            <ul className="space-y-2">
               {data.map((category) => (
                 <li key={`${category.id}-toc`}>
                   <a
                     href={`#${category.id}`}
                     className={cn(
-                      'block pl-4 py-1.5 text-sm border-l-2 transition-colors',
+                      'block py-1 text-sm transition-colors rounded-md px-3',
                       activeItemId === category.id || parentOfActive === category.id
-                        ? 'text-primary border-primary font-semibold'
-                        : 'text-muted-foreground border-border hover:text-foreground hover:border-gray-500'
+                        ? 'text-primary font-semibold bg-primary/10'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                     )}
                   >
                     {category.name}
                   </a>
                   {category.subcategories.length > 0 && (
-                    <ul className="pl-6 mt-1 space-y-1">
+                    <ul className="pl-4 mt-2 space-y-2">
                       {category.subcategories.map(sub => (
                         sub.name && (
                           <li key={`${sub.id}-toc`}>
                             <a
                               href={`#${sub.id}`}
                               className={cn(
-                                'block pl-4 py-1 text-xs border-l-2 transition-colors',
+                                'block py-1 text-xs transition-colors rounded-md px-3',
                                 activeItemId === sub.id
-                                  ? 'text-accent border-accent font-medium'
-                                  : 'text-muted-foreground/70 border-border/50 hover:text-foreground hover:border-gray-500'
+                                  ? 'text-accent font-medium bg-accent/10'
+                                  : 'text-muted-foreground/80 hover:text-foreground hover:bg-muted/50'
                               )}
                             >
                               {sub.name}
