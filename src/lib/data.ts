@@ -108,9 +108,19 @@ export const data: Category[] = [
     ],
   },
   {
-    id: 'developer-tools',
-    name: 'Developer Tools',
+    id: 'download',
+    name: 'Download',
     subcategories: [
+      {
+        id: 'download-main',
+        name: '',
+        links: [
+            { name: 'General DDL Sites', url: 'https://example.com', premium: true },
+            { name: 'Search4Porn', url: 'https://example.com', description: 'NSFW File Search' },
+            { name: 'AEBN Downloader', url: 'https://example.com', description: 'Downloader for AEBN' },
+            { name: 'StashDB', url: 'https://example.com', description: 'Porn Database / Invite' },
+        ]
+      },
       {
         id: 'tools-vcs',
         name: 'Version Control',
