@@ -81,6 +81,50 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <div className="max-w-screen-xl mx-auto lg:grid lg:grid-cols-12 lg:gap-x-12 px-4 sm:px-6 lg:px-8">
+        <aside className="hidden lg:block lg:col-span-3 py-12">
+          <div className="sticky top-24">
+            <h4 className="font-semibold text-lg mb-4 text-foreground">Table of Contents</h4>
+            <ul className="space-y-2">
+              {data.map((category) => (
+                <li key={`${category.id}-toc`}>
+                  <a
+                    href={`#${category.id}`}
+                    className={cn(
+                      'block py-1 text-sm transition-colors',
+                      activeItemId === category.id || parentOfActive === category.id
+                        ? 'text-primary font-semibold'
+                        : 'text-muted-foreground hover:text-foreground'
+                    )}
+                  >
+                    {category.name}
+                  </a>
+                  {category.subcategories.length > 0 && (
+                    <ul className="pl-4 mt-2 space-y-2 border-l border-border ml-3">
+                      {category.subcategories.map(sub => (
+                        sub.name && (
+                          <li key={`${sub.id}-toc`}>
+                            <a
+                              href={`#${sub.id}`}
+                              className={cn(
+                                'block py-1 text-xs transition-colors',
+                                activeItemId === sub.id
+                                  ? 'text-accent font-medium'
+                                  : 'text-muted-foreground/80 hover:text-foreground'
+                              )}
+                            >
+                              {sub.name}
+                            </a>
+                          </li>
+                        )
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+        
         <main className="lg:col-span-9 py-12">
           <header className="mb-8">
             <h1 className="text-5xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
@@ -154,50 +198,6 @@ export default function Home() {
             )}
           </div>
         </main>
-
-        <aside className="hidden lg:block lg:col-span-3 py-12">
-          <div className="sticky top-24">
-            <h4 className="font-semibold text-lg mb-4 text-foreground">Table of Contents</h4>
-            <ul className="space-y-2">
-              {data.map((category) => (
-                <li key={`${category.id}-toc`}>
-                  <a
-                    href={`#${category.id}`}
-                    className={cn(
-                      'block py-1 text-sm transition-colors rounded-md px-3',
-                      activeItemId === category.id || parentOfActive === category.id
-                        ? 'text-primary font-semibold bg-primary/10'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                    )}
-                  >
-                    {category.name}
-                  </a>
-                  {category.subcategories.length > 0 && (
-                    <ul className="pl-4 mt-2 space-y-2">
-                      {category.subcategories.map(sub => (
-                        sub.name && (
-                          <li key={`${sub.id}-toc`}>
-                            <a
-                              href={`#${sub.id}`}
-                              className={cn(
-                                'block py-1 text-xs transition-colors rounded-md px-3',
-                                activeItemId === sub.id
-                                  ? 'text-accent font-medium bg-accent/10'
-                                  : 'text-muted-foreground/80 hover:text-foreground hover:bg-muted/50'
-                              )}
-                            >
-                              {sub.name}
-                            </a>
-                          </li>
-                        )
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </aside>
       </div>
     </div>
   );
