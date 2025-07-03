@@ -39,18 +39,24 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200;
       let currentId = '';
+      const scrollPosition = window.scrollY + 200;
 
       const sortedRefs = Array.from(itemRefs.current.entries())
         .filter(([, ref]) => ref)
         .sort(([, a], [, b]) => a!.offsetTop - b!.offsetTop);
       
-      for (const [id, ref] of sortedRefs) {
-        if (ref && scrollPosition >= ref.offsetTop) {
-          currentId = id;
-        } else {
-          break;
+      // Special case for the bottom of the page
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+        currentId = sortedRefs[sortedRefs.length - 1]?.[0] || '';
+      } else {
+        // Find the last item that is above the scroll position
+        for (const [id, ref] of sortedRefs) {
+          if (ref && ref.offsetTop <= scrollPosition) {
+            currentId = id;
+          } else {
+            break;
+          }
         }
       }
       
@@ -65,7 +71,7 @@ export default function Home() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [activeItemId]);
+  }, [activeItemId, filteredData]);
 
   const getParentId = (subId: string): string | null => {
     for (const category of data) {
@@ -97,7 +103,7 @@ export default function Home() {
               Table of Contents
             </h4>
             <ul className="space-y-2">
-              {data.map((category) => (
+              {filteredData.map((category) => (
                 <li key={`${category.id}-toc`}>
                   <a
                     href={`#${category.id}`}
