@@ -65,7 +65,7 @@ export const data: Category[] = [
           { name: 'EroticMV', url: 'https://eroticmv.com/' },
           { name: 'RareLust', url: 'https://rarelust.com/movies-index/' },
           { name: 'PandaMovies', url: 'https://pandamovies.pw/' },
-          { name: 'SleazeMovies', url: 'https://example.com' },
+          { name: 'SleazeMovies', url: 'https://www.sleazemovies.com/' },
         ],
       },
       {
@@ -85,7 +85,7 @@ export const data: Category[] = [
         name: 'Hentai',
         links: [
           { name: 'EverythingMoe', url: 'https://everythingmoe.com/?nsfw=true#section-hentai', premium: true, description: 'Hentai Sites Index' },
-          { name: '/cumg/', url: 'https://rentry.co/coom', premium: true, description: 'Hentai Resources' },
+          { name: 'cumg', url: 'https://rentry.co/coom', premium: true, description: 'Hentai Resources' },
           { name: 'Nyaa Sukebei', url: 'https://sukebei.nyaa.si/', premium: true, description: 'Hentai Torrents' },
           { name: 'Anime-Sharing', url: 'https://www.anime-sharing.com/#downloads-requests', description: 'Hentai DDL' },
           { name: 'Oppai.Stream', url: 'https://oppai.stream/', description: 'Hentai Streaming' },
@@ -117,7 +117,7 @@ export const data: Category[] = [
             { name: 'General DDL Sites', url: 'https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/download', premium: true },
             { name: 'Search4Porn', url: 'https://search4porn.net/', description: 'NSFW File Search' },
             { name: 'AEBN Downloader', url: 'https://github.com/estellaarrieta/aebn-vod-downloader', description: 'Downloader for AEBN' },
-            { name: 'StashDB', url: 'https://stashdb.org/', description: 'Porn Database / Invite' },
+            { name: 'StashDB', url: 'https://stashdb.org/', description: 'Porn Database' },
         ]
       },
       {
@@ -166,8 +166,8 @@ export const data: Category[] = [
         ]},
         { id: 'leak-sites', name: 'Leak Sites', links: [
             { name: 'Hotleak', url: 'https://hotleak.vip/', premium: true, description: 'OnlyFans / Patreon' },
-            { name: 'Kemono', url: 'https://kemono.su/', premium: true, description: 'Patreon / Downloader / Patreon Buttons' },
-            { name: 'Coomer', url: 'https://coomer.su/', description: 'OnlyFans / Downloader' },
+            { name: 'Kemono', url: 'https://kemono.su/', premium: true, description: 'Patreon ' },
+            { name: 'Coomer', url: 'https://coomer.su/', description: 'OnlyFans ' },
             { name: 'SimpCity or SimpTown', url: 'https://simpcity.su/', description: 'OnlyFans / Patreon' },
         ]},
         { id: 'magazines', name: 'Magazines', links: [
@@ -223,7 +223,7 @@ export const data: Category[] = [
             { name: 'Gold Gay', url: 'https://www.gold-gay.com/' },
             { name: 'JAVBoys', url: 'https://javboys.com/', description: 'Gay JAV' },
             { name: 'Gay Torrents', url: 'https://www.gay-torrents.net/', description: 'Torrents / Use VPN' },
-            { name: 'Yupdates', url: 'https://yupdates.neocities.org/', description: 'Gay Porn Artwork / Drives / Discord' },
+            { name: 'Yupdates', url: 'https://yupdates.neocities.org/', description: 'Gay Porn Artwork' },
             { name: 'PBC', url: 'https://pbc.xxx/', description: 'Gay Porn Encyclopedia' },
             { name: 'MyReadingManga', url: 'https://fictionmania.tv/', description: 'LGBTQ+ Hentai' },
             { name: 'Nifty', url: 'https://www.nifty.org/nifty/', description: 'LGBT / Fictional' },
@@ -236,7 +236,7 @@ export const data: Category[] = [
     subcategories: [
         {id: 'tools-main', name: '', links: [
             { name: 'Stash', url: 'https://stashapp.cc/', premium: true, description: 'Porn File Manager' },
-            { name: 'Anal Sex Guide', url: 'https://example.com', premium: true, description: 'Anal Sex Guide' },
+            { name: 'Anal Sex Guide', url: 'https://github.com/regdude/anal', premium: true, description: 'Anal Sex Guide' },
             { name: 'PornStarByFace', url: 'https://pornstarbyface.com/', premium: true, description: 'NSFW Image Reverse Search' },
             { name: 'SauceNao', url: 'https://saucenao.com/', premium: true, description: 'Fictional NSFW Reverse Image Search' },
             { name: 'Bypass Subreddit Blocks', url: 'https://pastebin.com/gAAEQnqn', premium: true },
