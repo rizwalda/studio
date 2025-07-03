@@ -279,11 +279,6 @@ export default function Home() {
                           Table of contents for the page.
                         </SheetDescription>
                       </SheetHeader>
-                      <Button asChild className="w-full mb-6" onClick={() => setIsMenuOpen(false)}>
-                        <Link href="/tissues">
-                          Tissue Papers, Please!
-                        </Link>
-                      </Button>
                       <TableOfContents 
                         data={filteredData} 
                         activeItemId={activeItemId} 
@@ -294,6 +289,11 @@ export default function Home() {
                           setIsMenuOpen(false);
                         }}
                       />
+                      <Button asChild className="w-full mt-6" onClick={() => setIsMenuOpen(false)}>
+                        <Link href="/tissues">
+                          Tissue Papers, Please!
+                        </Link>
+                      </Button>
                   </SheetContent>
               </Sheet>
           </div>
