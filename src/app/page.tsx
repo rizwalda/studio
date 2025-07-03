@@ -70,43 +70,61 @@ export default function Home() {
   }, [searchTerm]);
 
   useEffect(() => {
+    // Create an ordered list of all IDs that are rendered on the page
+    const itemIds = filteredData.flatMap(category => [
+        category.id,
+        ...category.subcategories
+            .filter(sub => sub.links.length > 0)
+            .map(sub => sub.id)
+    ]);
+
+    if (itemIds.length === 0) return;
+
     const handleScroll = () => {
-      let closestId: string | null = null;
-      let minDistance = Infinity;
-      const triggerPoint = window.innerHeight * 0.3;
+        const triggerPoint = window.innerHeight * 0.3; // 30% from the top
+        let currentActiveId = '';
 
-      const sortedRefs = Array.from(itemRefs.current.entries())
-        .filter(([, ref]) => ref)
-        .sort(([, a], [, b]) => a!.offsetTop - b!.offsetTop);
-      
-      if (sortedRefs.length === 0) return;
-
-      for (const [id, ref] of sortedRefs) {
-        if (ref) {
-          const rect = ref.getBoundingClientRect();
-          if (rect.top < window.innerHeight && rect.bottom > 0) { // is in viewport
-            const distance = Math.abs(rect.top - triggerPoint);
-            if (distance < minDistance) {
-              minDistance = distance;
-              closestId = id;
-            }
-          }
+        // Case 1: Scrolled to the absolute bottom of the page
+        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5) {
+            currentActiveId = itemIds[itemIds.length - 1];
+            setActiveItemId(currentActiveId);
+            return;
         }
-      }
-      
-      if (closestId) {
-        setActiveItemId(closestId);
-      }
+
+        // Case 2: Iterate through items to find the last one above the trigger point
+        for (const id of itemIds) {
+            const element = itemRefs.current.get(id);
+            if (element) {
+                const rect = element.getBoundingClientRect();
+                if (rect.top <= triggerPoint) {
+                    currentActiveId = id;
+                } else {
+                    // Since items are sorted by their position on the page,
+                    // we can break early once we find an item below the trigger point.
+                    break;
+                }
+            }
+        }
+
+        // Case 3: Nothing is above the trigger point (i.e., at the top of the page)
+        // or no active ID was found. Default to the first item.
+        if (!currentActiveId) {
+            currentActiveId = itemIds[0];
+        }
+
+        if (activeItemId !== currentActiveId) {
+            setActiveItemId(currentActiveId);
+        }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); 
+    // Run on initial load
+    handleScroll();
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('scroll', handleScroll);
     };
-  }, [filteredData]);
-
+  }, [filteredData, activeItemId]);
 
   const getParentId = (subId: string): string | null => {
     for (const category of data) {
