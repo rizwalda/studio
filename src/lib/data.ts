@@ -156,29 +156,44 @@ export const data: Category[] = [
     ]
   },
   {
-    id: 'frontend-dev',
-    name: 'Frontend Development',
+    id: 'images',
+    name: 'Images',
     subcategories: [
-        { id: 'frontend-frameworks', name: 'JavaScript Frameworks', links: [
-            { name: 'React', url: 'https://react.dev', description: 'A library for building UIs.'},
-            { name: 'Vue.js', url: 'https://vuejs.org', description: 'The progressive JavaScript framework.'},
-            { name: 'Svelte', url: 'https://svelte.dev', description: 'Cybernetically enhanced web apps.'},
+        { id: 'images-main', name: '', links: [
+            { name: 'ImageFap', url: 'https://example.com', premium: true },
+            { name: 'NSFWMonster', url: 'https://example.com', premium: true },
+            { name: 'FikFap', url: 'https://example.com' },
+            { name: 'fyptt', url: 'https://example.com' },
         ]},
-        { id: 'frontend-css', name: 'CSS Frameworks', links: [
-            { name: 'Tailwind CSS', url: 'https://tailwindcss.com', description: 'A utility-first CSS framework.'},
-            { name: 'Bootstrap', url: 'https://getbootstrap.com', description: 'Powerful, extensible, and feature-packed.'},
+        { id: 'leak-sites', name: 'Leak Sites', links: [
+            { name: 'Hotleak', url: 'https://example.com', premium: true, description: 'OnlyFans / Patreon' },
+            { name: 'Kemono', url: 'https://example.com', premium: true, description: 'Patreon / Downloader / Patreon Buttons' },
+            { name: 'Coomer', url: 'https://example.com', description: 'OnlyFans / Downloader' },
+            { name: 'SimpCity or SimpTown', url: 'https://example.com', description: 'OnlyFans / Patreon' },
         ]},
-        { id: 'frontend-hosting', name: 'Hosting & Deployment', links: [
-            { name: 'Vercel', url: 'https://vercel.com', premium: true, description: 'Develop, preview, and ship.'},
-            { name: 'Netlify', url: 'https://netlify.com', premium: true, description: 'The fastest way to build the best web experiences.'},
+        { id: 'magazines', name: 'Magazines', links: [
+            { name: 'Mens Magazines', url: 'https://example.com', premium: true, description: 'NSFW Magazine Archives (1970s-modern)' },
+            { name: 'downmagaz', url: 'https://example.com' },
         ]},
-        { id: 'frontend-components', name: 'Component Libraries', links: [
-            { name: 'Shadcn/ui', url: 'https://ui.shadcn.com/', description: 'Beautifully designed components.'},
-            { name: 'Aceternity UI', url: 'https://ui.aceternity.com/', description: 'Copy-paste UI for React & Next.js.'},
+        { id: 'doujins-comics', name: 'Doujins / Comics', links: [
+            { name: 'Wholesome Hentai', url: 'https://example.com', premium: true, description: 'Wholesome Manga Index' },
+            { name: 'E-Hentai or ExHentai', url: 'https://example.com', premium: true, description: 'Hentai Manga / Comics' },
+            { name: 'ComicsValley', url: 'https://example.com', premium: true, description: 'Comics' },
+            { name: 'SchaleNetwork', url: 'https://example.com', premium: true, description: 'Official Translations / Mirrors' },
+            { name: 'Hitomi', url: 'https://example.com', description: 'Hentai Manga' },
+            { name: 'NHentai', url: 'https://example.com', description: 'Hentai Manga' },
         ]},
-        { id: 'frontend-animation', name: 'Animation Libraries', links: [
-            { name: 'Framer Motion', url: 'https://www.framer.com/motion/', description: 'A production-ready motion library for React.'},
-            { name: 'GSAP', url: 'https://gsap.com/', description: 'Professional-grade animation for the modern web.'},
+        { id: 'illustrations', name: 'Illustrations', links: [
+            { name: 'Pixiv', url: 'https://example.com', premium: true },
+            { name: 'Gelbooru', url: 'https://example.com', premium: true },
+            { name: 'Hentai Foundry', url: 'https://example.com', premium: true },
+            { name: 'kemono.party', url: 'https://example.com' },
+        ]},
+        { id: 'ai-generated-images', name: 'AI Generated Images', links: [
+            { name: 'Nectar', url: 'https://example.com' },
+            { name: 'Made.Porn', url: 'https://example.com' },
+            { name: 'PornLabs', url: 'https://example.com' },
+            { name: 'Pornify', url: 'https://example.com' },
         ]}
     ]
   },
