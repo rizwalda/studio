@@ -140,10 +140,10 @@ export const data: Category[] = [
     name: 'Backend Development',
     subcategories: [
         {id: 'backend-main', name: '', links: [
-            { name: 'Node.js', url: 'https://nodejs.org', description: 'JavaScript runtime built on Chrome\'s V8 engine.' },
-            { name: 'Express.js', url: 'https://expressjs.com', description: 'Fast, unopinionated, minimalist web framework for Node.js.' },
-            { name: 'Django', url: 'https://www.djangoproject.com', description: 'The web framework for perfectionists with deadlines.' },
-            { name: 'Firebase', url: 'https://firebase.google.com', premium: true, description: 'An app development platform that helps you build and grow apps.' },
+            { name: 'Node.js', url: 'https://example.com', description: 'JavaScript runtime built on Chrome\'s V8 engine.' },
+            { name: 'Express.js', url: 'https://example.com', description: 'Fast, unopinionated, minimalist web framework for Node.js.' },
+            { name: 'Django', url: 'https://example.com', description: 'The web framework for perfectionists with deadlines.' },
+            { name: 'Firebase', url: 'https://example.com', premium: true, description: 'An app development platform that helps you build and grow apps.' },
         ]}
     ]
   },
@@ -152,10 +152,10 @@ export const data: Category[] = [
     name: 'Design Resources',
     subcategories: [
         {id: 'design-main', name: '', links: [
-            { name: 'Figma', url: 'https://figma.com', description: 'The collaborative interface design tool.' },
-            { name: 'Dribbble', url: 'https://dribbble.com', description: 'Show and tell for designers.' },
-            { name: 'Unsplash', url: 'https://unsplash.com', description: 'The internet’s source of freely-usable images.' },
-            { name: 'Coolors', url: 'https://coolors.co', description: 'The super fast color palettes generator.' },
+            { name: 'Figma', url: 'https://example.com', description: 'The collaborative interface design tool.' },
+            { name: 'Dribbble', url: 'https://example.com', description: 'Show and tell for designers.' },
+            { name: 'Unsplash', url: 'https://example.com', description: 'The internet’s source of freely-usable images.' },
+            { name: 'Coolors', url: 'https://example.com', description: 'The super fast color palettes generator.' },
         ]}
     ]
   },
@@ -164,9 +164,9 @@ export const data: Category[] = [
     name: 'Miscellaneous',
     subcategories: [
         {id: 'misc-main', name: '', links: [
-            { name: 'Product Hunt', url: 'https://www.producthunt.com', description: 'The place to discover your next favorite things.' },
-            { name: 'Indie Hackers', url: 'https://www.indiehackers.com', description: 'Work together to build profitable online businesses.' },
-            { name: 'Hacker News', url: 'https://news.ycombinator.com', description: 'A social news website focusing on computer science and entrepreneurship.' },
+            { name: 'Product Hunt', url: 'https://example.com', description: 'The place to discover your next favorite things.' },
+            { name: 'Indie Hackers', url: 'https://example.com', description: 'Work together to build profitable online businesses.' },
+            { name: 'Hacker News', url: 'https://example.com', description: 'A social news website focusing on computer science and entrepreneurship.' },
         ]}
     ]
   }
