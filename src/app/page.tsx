@@ -81,7 +81,7 @@ export default function Home() {
   const [filteredData, setFilteredData] = useState<Category[]>(data);
   const [activeItemId, setActiveItemId] = useState<string>('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentYear, setCurrentYear] = useState<string>('');
+  const [currentTime, setCurrentTime] = useState<string>('');
   const [isMounted, setIsMounted] = useState(false);
 
   const itemRefs = useRef(new Map<string, HTMLElement | null>());
@@ -93,7 +93,10 @@ export default function Home() {
   
   useEffect(() => {
     setIsMounted(true);
-    setCurrentYear(new Date().getFullYear().toString());
+    
+    const timer = setInterval(() => {
+      setCurrentTime(new Date().toLocaleTimeString());
+    }, 1000);
 
     const trackedItemIds = data.flatMap(category => [
       category.id,
@@ -104,6 +107,8 @@ export default function Home() {
     if (trackedItemIds.length > 0) {
       setActiveItemId(trackedItemIds[0]);
     }
+    
+    return () => clearInterval(timer);
   }, []);
 
   const scrollToTop = () => {
@@ -395,7 +400,7 @@ export default function Home() {
         isMounted ? 'opacity-100' : 'opacity-0 translate-y-4'
        )}>
         <div className="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear} GOONMOVEMENT.</p>
+          <p>{currentTime}</p>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="group inline-flex items-center gap-2 hover:text-foreground transition-colors"
