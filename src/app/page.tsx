@@ -39,40 +39,40 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-        const activationLine = 240; 
-        const sortedRefs = Array.from(itemRefs.current.entries())
-            .filter(([, ref]) => ref)
-            .sort(([, a], [, b]) => a!.offsetTop - b!.offsetTop);
-        
-        // Priority 1: Check if we are at the bottom of the page.
-        // This is the most reliable way to catch the last item.
-        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5) {
-            if (sortedRefs.length > 0) {
-                setActiveItemId(sortedRefs[sortedRefs.length - 1][0]);
-            }
-            return;
-        }
+      const triggerPoint = window.innerHeight * 0.25;
 
-        // Priority 2: If not at the bottom, find the active item by iterating backwards.
-        // This is more efficient and correct for all other cases.
-        let newActiveId = '';
-        for (let i = sortedRefs.length - 1; i >= 0; i--) {
-            const [id, ref] = sortedRefs[i];
-            // If the section's top is above the activation line, it's our current active section.
-            if (ref.getBoundingClientRect().top <= activationLine) {
-                newActiveId = id;
-                break; 
-            }
+      const sortedRefs = Array.from(itemRefs.current.entries())
+        .filter(([, ref]) => ref)
+        .sort(([, a], [, b]) => a!.offsetTop - b!.offsetTop);
+
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5) {
+        if (sortedRefs.length > 0) {
+          setActiveItemId(sortedRefs[sortedRefs.length - 1][0]);
         }
-        
-        setActiveItemId(newActiveId);
+        return;
+      }
+
+      let newActiveId = '';
+      for (let i = sortedRefs.length - 1; i >= 0; i--) {
+        const [id, ref] = sortedRefs[i];
+        if (ref.getBoundingClientRect().top < triggerPoint) {
+          newActiveId = id;
+          break;
+        }
+      }
+      
+      if (!newActiveId && sortedRefs.length > 0) {
+        newActiveId = sortedRefs[0][0];
+      }
+      
+      setActiveItemId(newActiveId);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Run on initial load
+    handleScroll();
 
     return () => {
-        window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [filteredData]);
 
