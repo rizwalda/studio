@@ -321,7 +321,7 @@ export default function Home() {
               <h1 className="text-5xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
                 GOONMOVEMENT
               </h1>
-              <p className="text-lg text-muted-foreground mt-2">A curated list of resources.</p>
+              <p className="text-lg text-muted-foreground mt-2">Hitchhiker’s Guide to Gooning.</p>
             </header>
 
             <div className="flex items-center gap-4 mb-8 lg:mb-12">
