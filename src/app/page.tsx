@@ -39,41 +39,41 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      let currentId = '';
-      const scrollPosition = window.scrollY + 200;
+      // A section is "active" if its top is at or above this line in the viewport.
+      const activationLine = 240; 
 
       const sortedRefs = Array.from(itemRefs.current.entries())
-        .filter(([, ref]) => ref)
+        .filter(([, ref]) => ref) // Ensure ref is not null
         .sort(([, a], [, b]) => a!.offsetTop - b!.offsetTop);
-      
-      // A more robust check for the bottom of the page.
-      // We check if the scroll position is within a few pixels of the bottom.
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5) {
-        // If so, force the active ID to be the last item.
-        currentId = sortedRefs[sortedRefs.length - 1]?.[0] || '';
-      } else {
-        // Otherwise, find the last item whose top is above the scroll threshold.
-        for (const [id, ref] of sortedRefs) {
-          if (ref && ref.offsetTop <= scrollPosition) {
-            currentId = id;
-          } else {
-            break; // Since the list is sorted, we can exit early.
-          }
+
+      let newActiveId = '';
+
+      // Find the last element that is above the activation line.
+      for (const [id, ref] of sortedRefs) {
+        if (ref.getBoundingClientRect().top <= activationLine) {
+          newActiveId = id;
+        } else {
+          // Since refs are sorted, we can stop once we find one below the line.
+          break;
+        }
+      }
+
+      // Edge Case: If scrolled to the very bottom, force the last item to be active.
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+        if (sortedRefs.length > 0) {
+          newActiveId = sortedRefs[sortedRefs.length - 1][0];
         }
       }
       
-      // Set the active item. React will handle not re-rendering if the ID is the same.
-      setActiveItemId(currentId);
+      setActiveItemId(newActiveId);
     };
-    
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // Run on initial load
-    handleScroll();
+    handleScroll(); // Run on initial load to set the active item
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-    // The effect only needs to re-run if the filtered data changes the elements on the page.
   }, [filteredData]);
 
   const getParentId = (subId: string): string | null => {
