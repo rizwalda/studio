@@ -262,7 +262,7 @@ export default function Home() {
                         </SheetDescription>
                       </SheetHeader>
                       <Button asChild className="w-full mb-6" onClick={() => setIsMenuOpen(false)}>
-                        <Link href="/image-board">
+                        <Link href="/tissues">
                           <Box className="mr-2 h-4 w-4" />
                           Tissue Papers, Please!
                         </Link>
@@ -319,7 +319,7 @@ export default function Home() {
                 />
               </div>
               <Button asChild variant="outline" size="lg" className="hidden lg:inline-flex">
-                <Link href="/image-board">
+                <Link href="/tissues">
                   <Box className="mr-2 h-4 w-4" />
                   Tissue Papers, Please!
                 </Link>
