@@ -183,13 +183,18 @@ export default function Home() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    
+    // Initial check in a timeout to avoid race conditions on load
+    const initialCheckTimeout = setTimeout(() => {
+      handleScroll();
+    }, 100);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       if (scrollTimeout.current) {
         clearTimeout(scrollTimeout.current);
       }
+      clearTimeout(initialCheckTimeout);
     };
   }, [filteredData]); // Effect only re-runs when data changes, not on every highlight
 
@@ -249,7 +254,7 @@ export default function Home() {
                   </SheetTrigger>
                   <SheetContent side="left" className="w-full max-w-xs p-6 bg-card border-r-border overflow-y-auto">
                       <SheetHeader>
-                        <SheetTitle className="sr-only">Menu</SheetTitle>
+                        <SheetTitle>Menu</SheetTitle>
                         <SheetDescription className="sr-only">
                           Table of contents for the page.
                         </SheetDescription>
@@ -357,7 +362,7 @@ export default function Home() {
       </div>
        <footer className="mt-12 lg:mt-24 border-t border-border/20">
         <div className="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear || new Date().getFullYear().toString()} GOONMOVEMENT.</p>
+          <p>&copy; {currentYear} GOONMOVEMENT.</p>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="group inline-flex items-center gap-2 hover:text-foreground transition-colors"
