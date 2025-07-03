@@ -3,7 +3,6 @@ export type LinkItem = {
   url: string;
   description?: string;
   premium?: boolean;
-  icon?: string;
 };
 
 export type SubCategory = {
@@ -19,62 +18,156 @@ export type Category = {
 };
 
 export const data: Category[] = [
-    {
-        id: 'streaming',
-        name: 'Streaming',
-        subcategories: [
-            {
-                id: 'streaming-main',
-                name: '',
-                links: [
-                    { name: 'Plex', url: '#', premium: true },
-                    { name: 'Jellyfin', url: '#', premium: true },
-                    { name: 'Stremio', url: '#', premium: true },
-                    { name: 'Kodi', url: '#', premium: true },
-                    { name: 'Emby', url: '#', premium: true },
-                    { name: 'Full HD Cinema', url: '#'},
-                    { name: 'HD Today', url: '#'},
-                    { name: 'Flixtor', url: '#'},
-                ]
-            }
+  {
+    id: 'streaming',
+    name: 'Streaming',
+    subcategories: [
+      {
+        id: 'streaming-main',
+        name: '',
+        links: [
+          { name: 'Plex', url: '#', premium: true, description: 'Organize, stream, and share your media.' },
+          { name: 'Jellyfin', url: '#', premium: true, description: 'The Free Software Media System.' },
+          { name: 'Stremio', url: '#', premium: true, description: 'All your video content on one screen.' },
+          { name: 'Kodi', url: '#', premium: true, description: 'Open source home theater software.' },
+          { name: 'Emby', url: '#', premium: true, description: 'Personal media server.' },
+          { name: 'Full HD Cinema', url: '#', description: 'Watch movies in full HD.' },
+          { name: 'HD Today', url: '#', description: 'A popular choice for recent releases.' },
+          { name: 'Flixtor', url: '#', description: 'Stream movies and TV shows for free.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'nsfw-content',
+    name: 'NSFW',
+    subcategories: [
+      {
+        id: 'nsfw-doujin',
+        name: 'Doujinshi & Manga',
+        links: [
+          { name: 'e-hentai', url: '#', description: 'An extensive image gallery.' },
+          { name: 'nhentai', url: '#', description: 'Popular source for doujinshi.' },
+        ],
+      },
+      {
+        id: 'nsfw-video',
+        name: 'Video Platforms',
+        links: [
+          { name: 'Pornhub', url: '#', description: 'One of the largest video sites.' },
+          { name: 'Onejav', url: '#', description: 'Japanese adult video content.' },
+        ],
+      },
+      {
+        id: 'nsfw-specialized',
+        name: 'Specialized Content',
+        links: [
+          { name: 'BigTits.video', url: '#', description: 'Niche-specific video content.' },
+          { name: 'MrDeepFakes', url: '#', description: 'AI-generated content.' },
+        ],
+      },
+      {
+        id: 'nsfw-portals',
+        name: 'Portals & Aggregators',
+        links: [
+          { name: 'ThePornDude', url: '#', description: 'A directory for various sites.' },
+          { name: 'PornKai', url: '#', description: 'Aggregator with many categories.' },
+          { name: 'The Fap Shack', url: '#', description: 'Community and content portal.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'developer-tools',
+    name: 'Developer Tools',
+    subcategories: [
+      {
+        id: 'tools-vcs',
+        name: 'Version Control',
+        links: [
+            { name: 'GitHub', url: 'https://github.com', description: 'The leading development platform.' },
+            { name: 'GitLab', url: 'https://gitlab.com', description: 'An open-source DevOps platform.' },
         ]
-    },
-    {
-        id: 'nsfw',
-        name: 'NSFW',
-        subcategories: [
-            {
-                id: 'nsfw-main',
-                name: '',
-                links: [
-                    { name: 'e-hentai', url: '#', icon: '🌐' },
-                    { name: 'nhentai', url: '#', icon: '🌐' },
-                    { name: 'Pornhub', url: '#'},
-                    { name: 'Onejav', url: '#'},
-                    { name: 'BigTits.video', url: '#'},
-                    { name: 'MrDeepFakes', url: '#'},
-                    { name: 'ThePornDude', url: '#'},
-                    { name: 'PornKai', url: '#'},
-                    { name: 'IndianPorn.com', url: '#'},
-                    { name: 'TompJ', url: '#'},
-                    { name: 'The Fap Shack', url: '#'},
-                ]
-            }
+      },
+      {
+        id: 'tools-editors',
+        name: 'Code Editors',
+        links: [
+            { name: 'VS Code', url: 'https://code.visualstudio.com', description: 'The most popular code editor.' },
+            { name: 'JetBrains IDEs', url: 'https://www.jetbrains.com/', description: 'A suite of powerful IDEs.' },
         ]
-    },
-    {
-        id: 'tools',
-        name: 'Tools',
-        subcategories: [
-            {
-                id: 'tools-main',
-                name: '',
-                links: [
-                    { name: 'Google', url: 'https://google.com' },
-                    { name: 'DuckDuckGo', url: 'https://duckduckgo.com' },
-                    { name: 'Wikipedia', url: 'https://wikipedia.org' },
-                ]
-            }
+      },
+      {
+        id: 'tools-search',
+        name: 'Search & Reference',
+        links: [
+            { name: 'Google', url: 'https://google.com', description: 'The worlds leading search engine.' },
+            { name: 'DuckDuckGo', url: 'https://duckduckgo.com', description: 'Privacy-focused search engine.' },
+            { name: 'Wikipedia', url: 'https://wikipedia.org', description: 'The free encyclopedia.' },
         ]
-    }
+      }
+    ]
+  },
+  {
+    id: 'frontend-dev',
+    name: 'Frontend Development',
+    subcategories: [
+        { id: 'frontend-frameworks', name: 'JavaScript Frameworks', links: [
+            { name: 'React', url: 'https://react.dev', description: 'A library for building UIs.'},
+            { name: 'Vue.js', url: 'https://vuejs.org', description: 'The progressive JavaScript framework.'},
+            { name: 'Svelte', url: 'https://svelte.dev', description: 'Cybernetically enhanced web apps.'},
+        ]},
+        { id: 'frontend-css', name: 'CSS Frameworks', links: [
+            { name: 'Tailwind CSS', url: 'https://tailwindcss.com', description: 'A utility-first CSS framework.'},
+            { name: 'Bootstrap', url: 'https://getbootstrap.com', description: 'Powerful, extensible, and feature-packed.'},
+        ]},
+        { id: 'frontend-hosting', name: 'Hosting & Deployment', links: [
+            { name: 'Vercel', url: 'https://vercel.com', premium: true, description: 'Develop, preview, and ship.'},
+            { name: 'Netlify', url: 'https://netlify.com', premium: true, description: 'The fastest way to build the best web experiences.'},
+        ]},
+        { id: 'frontend-components', name: 'Component Libraries', links: [
+            { name: 'Shadcn/ui', url: 'https://ui.shadcn.com/', description: 'Beautifully designed components.'},
+            { name: 'Aceternity UI', url: 'https://ui.aceternity.com/', description: 'Copy-paste UI for React & Next.js.'},
+        ]},
+        { id: 'frontend-animation', name: 'Animation Libraries', links: [
+            { name: 'Framer Motion', url: 'https://www.framer.com/motion/', description: 'A production-ready motion library for React.'},
+            { name: 'GSAP', url: 'https://gsap.com/', description: 'Professional-grade animation for the modern web.'},
+        ]}
+    ]
+  },
+  {
+    id: 'backend-dev',
+    name: 'Backend Development',
+    subcategories: [
+        {id: 'backend-main', name: '', links: [
+            { name: 'Node.js', url: 'https://nodejs.org', description: 'JavaScript runtime built on Chrome\'s V8 engine.' },
+            { name: 'Express.js', url: 'https://expressjs.com', description: 'Fast, unopinionated, minimalist web framework for Node.js.' },
+            { name: 'Django', url: 'https://www.djangoproject.com', description: 'The web framework for perfectionists with deadlines.' },
+            { name: 'Firebase', url: 'https://firebase.google.com', premium: true, description: 'An app development platform that helps you build and grow apps.' },
+        ]}
+    ]
+  },
+  {
+    id: 'design-resources',
+    name: 'Design Resources',
+    subcategories: [
+        {id: 'design-main', name: '', links: [
+            { name: 'Figma', url: 'https://figma.com', description: 'The collaborative interface design tool.' },
+            { name: 'Dribbble', url: 'https://dribbble.com', description: 'Show and tell for designers.' },
+            { name: 'Unsplash', url: 'https://unsplash.com', description: 'The internet’s source of freely-usable images.' },
+            { name: 'Coolors', url: 'https://coolors.co', description: 'The super fast color palettes generator.' },
+        ]}
+    ]
+  },
+  {
+    id: 'miscellaneous',
+    name: 'Miscellaneous',
+    subcategories: [
+        {id: 'misc-main', name: '', links: [
+            { name: 'Product Hunt', url: 'https://www.producthunt.com', description: 'The place to discover your next favorite things.' },
+            { name: 'Indie Hackers', url: 'https://www.indiehackers.com', description: 'Work together to build profitable online businesses.' },
+            { name: 'Hacker News', url: 'https://news.ycombinator.com', description: 'A social news website focusing on computer science and entrepreneurship.' },
+        ]}
+    ]
+  }
 ];
