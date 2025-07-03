@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { data, Category } from '@/lib/data';
-import { Star, ArrowUpRight, Search, ArrowUp, Menu } from 'lucide-react';
+import { Star, ArrowUpRight, Search, ArrowUp, Menu, ImageIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -80,7 +81,7 @@ export default function Home() {
   const [filteredData, setFilteredData] = useState<Category[]>(data);
   const [activeItemId, setActiveItemId] = useState<string>(data[0]?.id || '');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentYear, setCurrentYear] = useState<string | null>(null);
+  const [currentYear, setCurrentYear] = useState<string>('');
 
   const itemRefs = useRef(new Map<string, HTMLElement | null>());
   const isClickScrolling = useRef(false);
@@ -144,6 +145,11 @@ export default function Home() {
     ]);
 
     if (trackedItemIds.length === 0) return;
+
+    // Set initial active item without causing hydration error
+    if (typeof window !== 'undefined' && window.scrollY < 100) {
+      setActiveItemId(trackedItemIds[0]);
+    }
 
     const handleScroll = () => {
       // Don't run scroll-based highlighting if a click-scroll is in progress
@@ -215,9 +221,15 @@ export default function Home() {
     
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
+      const offset = 96; // Height of sticky header
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
       });
     }
 
@@ -263,12 +275,21 @@ export default function Home() {
                           Table of contents for the page.
                         </SheetDescription>
                       </SheetHeader>
+                      <Button asChild className="w-full mb-6" onClick={() => setIsMenuOpen(false)}>
+                        <Link href="/image-board">
+                          <ImageIcon className="mr-2 h-4 w-4" />
+                          Image Board
+                        </Link>
+                      </Button>
                       <TableOfContents 
                         data={filteredData} 
                         activeItemId={activeItemId} 
                         parentOfActive={parentOfActive} 
                         onLinkClick={handleTocClick}
-                        onTitleClick={scrollToTop}
+                        onTitleClick={() => {
+                          scrollToTop();
+                          setIsMenuOpen(false);
+                        }}
                       />
                   </SheetContent>
               </Sheet>
@@ -299,15 +320,23 @@ export default function Home() {
               <p className="text-lg text-muted-foreground mt-2">A curated list of resources.</p>
             </header>
 
-            <div className="relative mb-8 lg:mb-12">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search all resources..."
-                className="w-full pl-12 h-11 text-md md:text-lg bg-card border-2 border-border focus:border-primary/50 transition-colors"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+            <div className="flex items-center gap-4 mb-8 lg:mb-12">
+              <div className="relative flex-grow">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search all resources..."
+                  className="w-full pl-12 h-11 text-md md:text-lg bg-card border-2 border-border focus:border-primary/50 transition-colors"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              <Button asChild variant="outline" size="lg" className="hidden lg:inline-flex">
+                <Link href="/image-board">
+                  <ImageIcon className="mr-2 h-4 w-4" />
+                  Image Board
+                </Link>
+              </Button>
             </div>
 
             <div className="space-y-12 md:space-y-16">
@@ -368,7 +397,7 @@ export default function Home() {
       </div>
        <footer className="mt-12 lg:mt-24 border-t border-border/20">
         <div className="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear ? currentYear : ''} GOONMOVEMENT.</p>
+          <p>&copy; {currentYear} GOONMOVEMENT.</p>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="group inline-flex items-center gap-2 hover:text-foreground transition-colors"
