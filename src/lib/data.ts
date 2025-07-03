@@ -114,42 +114,42 @@ export const data: Category[] = [
         id: 'download-main',
         name: '',
         links: [
-            { name: 'General DDL Sites', url: 'https://example.com', premium: true },
-            { name: 'Search4Porn', url: 'https://example.com', description: 'NSFW File Search' },
-            { name: 'AEBN Downloader', url: 'https://example.com', description: 'Downloader for AEBN' },
-            { name: 'StashDB', url: 'https://example.com', description: 'Porn Database' },
+            { name: 'General DDL Sites', url: 'https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/download', premium: true },
+            { name: 'Search4Porn', url: 'https://search4porn.net/', description: 'NSFW File Search' },
+            { name: 'AEBN Downloader', url: 'https://github.com/estellaarrieta/aebn-vod-downloader', description: 'Downloader for AEBN' },
+            { name: 'StashDB', url: 'https://stashdb.org/', description: 'Porn Database / Invite' },
         ]
       },
       {
         id: 'download-communities',
         name: 'Communities',
         links: [
-            { name: 'Pornoslon', url: 'https://example.com' },
-            { name: 'PornBBS', url: 'https://example.com' },
-            { name: 'PornBB', url: 'https://example.com' },
-            { name: 'Eroticity', url: 'https://example.com' },
+            { name: 'Pornoslon', url: 'http://pornoslon.me/' },
+            { name: 'PornBBS', url: 'https://pornbbs.org/' },
+            { name: 'PornBB', url: 'https://www.pornbb.org/forum' },
+            { name: 'Eroticity', url: 'https://eroticity.net/forum.php' },
         ]
       },
       {
         id: 'download-games',
         name: 'Games',
         links: [
-            { name: 'F95Zone', url: 'https://example.com', premium: true },
-            { name: 'Nyaa Sukebei', url: 'https://example.com', premium: true },
-            { name: 'Anime-Sharing', url: 'https://example.com', premium: true, description: 'Hentai Games DDL' },
-            { name: 'VNPocket', url: 'https://example.com' },
+            { name: 'F95Zone', url: 'https://f95zone.to/', premium: true },
+            { name: 'Nyaa Sukebei', url: 'https://sukebei.nyaa.si/', premium: true },
+            { name: 'Anime-Sharing', url: 'https://www.anime-sharing.com/#downloads-requests', premium: true, description: 'Hentai Games DDL' },
+            { name: 'VNPocket', url: 'https://vnpocket.com/' },
         ]
       },
       {
         id: 'download-torrents',
         name: 'Torrents',
         links: [
-            { name: 'myporn.club', url: 'https://example.com', premium: true },
-            { name: 'XXXCLub', url: 'https://example.com', premium: true },
-            { name: 'Nyaa Sukebei', url: 'https://example.com', premium: true, description: 'JAV' },
-            { name: 'ProjectJav', url: 'https://example.com', premium: true, description: 'JAV' },
-            { name: 'OneJAV', url: 'https://example.com', premium: true, description: 'JAV' },
-            { name: 'General Torrent Sites', url: 'https://example.com' },
+            { name: 'myporn.club', url: 'https://myporn.club/', premium: true },
+            { name: 'XXXCLub', url: 'https://xxxclub.to/', premium: true },
+            { name: 'Nyaa Sukebei', url: 'https://sukebei.nyaa.si/', premium: true, description: 'JAV' },
+            { name: 'ProjectJav', url: 'https://projectjav.com/', premium: true, description: 'JAV' },
+            { name: 'OneJAV', url: 'https://onejav.com/', premium: true, description: 'JAV' },
+            { name: 'General Torrent Sites', url: 'https://www.reddit.com/r/FREEMEDIAHECKYEAH/wiki/torrent' },
         ]
       }
     ]
@@ -223,7 +223,7 @@ export const data: Category[] = [
             { name: 'Gold Gay', url: 'https://www.gold-gay.com/' },
             { name: 'JAVBoys', url: 'https://javboys.com/', description: 'Gay JAV' },
             { name: 'Gay Torrents', url: 'https://www.gay-torrents.net/', description: 'Torrents / Use VPN' },
-            { name: 'Yupdates', url: 'https://yupdates.neocities.org/', description: 'Gay Porn Artwork' },
+            { name: 'Yupdates', url: 'https://yupdates.neocities.org/', description: 'Gay Porn Artwork / Drives / Discord' },
             { name: 'PBC', url: 'https://pbc.xxx/', description: 'Gay Porn Encyclopedia' },
             { name: 'MyReadingManga', url: 'https://fictionmania.tv/', description: 'LGBTQ+ Hentai' },
             { name: 'Nifty', url: 'https://www.nifty.org/nifty/', description: 'LGBT / Fictional' },
