@@ -228,7 +228,7 @@ export default function Home() {
     
     const element = document.getElementById(id);
     if (element) {
-      const offset = 96;
+      const offset = 80;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -258,16 +258,16 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
-      <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border h-24">
-          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center h-full">
-              <button onClick={scrollToTop} className="focus:outline-none focus:ring-2 focus:ring-ring rounded-sm">
-                <h1 className="text-3xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+      <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border h-20">
+          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center h-full gap-4">
+              <button onClick={scrollToTop} className="focus:outline-none focus:ring-2 focus:ring-ring rounded-sm min-w-0">
+                <h1 className="truncate text-2xl sm:text-3xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
                   GOONMOVEMENT
                 </h1>
               </button>
               <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                   <SheetTrigger asChild>
-                      <Button variant="ghost" size="icon">
+                      <Button variant="ghost" size="icon" className="flex-shrink-0">
                           <Menu className="h-6 w-6" />
                           <span className="sr-only">Open Menu</span>
                       </Button>
@@ -348,7 +348,7 @@ export default function Home() {
                   key={category.id}
                   id={category.id}
                   ref={(el) => itemRefs.current.set(category.id, el)}
-                  className="scroll-mt-24"
+                  className="scroll-mt-20"
                 >
                   <h2 className="text-2xl md:text-3xl font-bold text-gray-200 border-b-2 border-primary/30 pb-3 mb-6">
                     {category.name}
@@ -360,7 +360,7 @@ export default function Home() {
                           key={sub.id} 
                           id={sub.id} 
                           ref={(el) => itemRefs.current.set(sub.id, el)}
-                          className="scroll-mt-24"
+                          className="scroll-mt-20"
                         >
                           {sub.name && <h3 className="text-lg md:text-xl font-semibold text-gray-400 mb-4">{sub.name}</h3>}
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -370,16 +370,16 @@ export default function Home() {
                                 href={link.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group bg-card p-4 rounded-lg border border-border hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 flex justify-between items-center"
+                                className="group bg-card p-4 rounded-lg border border-border hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 flex justify-between items-start"
                               >
-                                <div>
+                                <div className="min-w-0 mr-4">
                                     <div className="flex items-center mb-1">
-                                        {link.premium && <Star className="h-4 w-4 text-primary fill-primary mr-2" />}
-                                        <p className="font-semibold text-foreground">{link.name}</p>
+                                        {link.premium && <Star className="h-4 w-4 text-primary fill-primary mr-2 flex-shrink-0" />}
+                                        <p className="font-semibold text-foreground truncate">{link.name}</p>
                                     </div>
-                                    {link.description && <p className="text-sm text-muted-foreground">{link.description}</p>}
+                                    {link.description && <p className="text-sm text-muted-foreground truncate">{link.description}</p>}
                                 </div>
-                                <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-accent transition-transform duration-300 transform group-hover:rotate-45" />
+                                <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-accent transition-transform duration-300 transform group-hover:rotate-45 flex-shrink-0" />
                               </a>
                             ))}
                           </div>
