@@ -39,42 +39,43 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // A section is "active" if its top is at or above this line in the viewport.
-      const activationLine = 240; 
-
-      const sortedRefs = Array.from(itemRefs.current.entries())
-        .filter(([, ref]) => ref) // Ensure ref is not null
-        .sort(([, a], [, b]) => a!.offsetTop - b!.offsetTop);
-
-      let newActiveId = '';
-
-      // Find the last element that is above the activation line.
-      for (const [id, ref] of sortedRefs) {
-        if (ref.getBoundingClientRect().top <= activationLine) {
-          newActiveId = id;
-        } else {
-          // Since refs are sorted, we can stop once we find one below the line.
-          break;
+        const activationLine = 240; 
+        const sortedRefs = Array.from(itemRefs.current.entries())
+            .filter(([, ref]) => ref)
+            .sort(([, a], [, b]) => a!.offsetTop - b!.offsetTop);
+        
+        // Priority 1: Check if we are at the bottom of the page.
+        // This is the most reliable way to catch the last item.
+        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5) {
+            if (sortedRefs.length > 0) {
+                setActiveItemId(sortedRefs[sortedRefs.length - 1][0]);
+            }
+            return;
         }
-      }
 
-      // Edge Case: If scrolled to the very bottom, force the last item to be active.
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
-        if (sortedRefs.length > 0) {
-          newActiveId = sortedRefs[sortedRefs.length - 1][0];
+        // Priority 2: If not at the bottom, find the active item by iterating backwards.
+        // This is more efficient and correct for all other cases.
+        let newActiveId = '';
+        for (let i = sortedRefs.length - 1; i >= 0; i--) {
+            const [id, ref] = sortedRefs[i];
+            // If the section's top is above the activation line, it's our current active section.
+            if (ref.getBoundingClientRect().top <= activationLine) {
+                newActiveId = id;
+                break; 
+            }
         }
-      }
-      
-      setActiveItemId(newActiveId);
+        
+        setActiveItemId(newActiveId);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Run on initial load to set the active item
+    handleScroll(); // Run on initial load
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('scroll', handleScroll);
     };
   }, [filteredData]);
+
 
   const getParentId = (subId: string): string | null => {
     for (const category of data) {
