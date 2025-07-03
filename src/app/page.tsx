@@ -7,9 +7,11 @@ import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 
 const Footer = () => {
-  const [currentYear, setCurrentYear] = useState('');
+  const [currentYear, setCurrentYear] = useState<string | null>(null);
 
   useEffect(() => {
+    // This code runs only on the client, after the component has mounted.
+    // This prevents a hydration mismatch between the server and client.
     setCurrentYear(new Date().getFullYear().toString());
   }, []);
 
@@ -23,7 +25,7 @@ const Footer = () => {
   return (
     <footer className="mt-24 border-t border-border/20">
       <div className="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm text-muted-foreground">
-        <p>&copy; {currentYear} GOONMOVEMENT. All rights reserved.</p>
+        <p>&copy; {currentYear || ''} GOONMOVEMENT. All rights reserved.</p>
         <button
           onClick={scrollToTop}
           className="group inline-flex items-center gap-2 hover:text-foreground transition-colors"
