@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -243,7 +244,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
       {/* Mobile Header */}
       <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border">
-          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center h-16">
+          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center h-20">
               <button onClick={scrollToTop} className="focus:outline-none focus:ring-2 focus:ring-ring rounded-sm">
                 <h1 className="text-xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
                   GOONMOVEMENT
