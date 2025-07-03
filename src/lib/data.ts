@@ -27,7 +27,7 @@ export const data: Category[] = [
         id: 'index-main',
         name: '',
         links: [ 
-          { name: "Reddit Doesn't Like This Site", url: 'https://www.reddit-doesnt-like-this.site/', premium: true },
+          { name: 'IndianPornList', url: 'https://indianpornlist.com/', premium: true },
           { name: 'NSFW Subreddits, 2, 3 or Multireddits', url: 'https://www.reddit.com/r/NSFW411/wiki/index', premium: true },
           { name: 'PornBox', url: 'http://pornbox.org/' },
           { name: 'One Porn List', url: 'https://onepornlist.com/' },
