@@ -262,7 +262,7 @@ export default function Home() {
           <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center h-full gap-4">
               <button onClick={scrollToTop} className="focus:outline-none focus:ring-2 focus:ring-ring rounded-sm min-w-0">
                 <h1 className="truncate text-2xl sm:text-3xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
-                  GOONMOVEMENT
+                  Tissue Papers, Please!
                 </h1>
               </button>
               <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -291,7 +291,7 @@ export default function Home() {
                       />
                       <Button asChild className="w-full mt-6" onClick={() => setIsMenuOpen(false)}>
                         <Link href="/tissues">
-                          Tissue Papers, Please!
+                          goonmovement
                         </Link>
                       </Button>
                   </SheetContent>
@@ -319,7 +319,7 @@ export default function Home() {
           )}>
             <header className="mb-8 hidden lg:block">
               <h1 className="text-5xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
-                GOONMOVEMENT
+                Tissue Papers, Please!
               </h1>
               <p className="text-lg text-muted-foreground mt-2">Hitchhiker’s Guide to Gooning.</p>
             </header>
@@ -337,7 +337,7 @@ export default function Home() {
               </div>
               <Button asChild variant="outline" size="lg" className="hidden lg:inline-flex">
                 <Link href="/tissues">
-                  Tissue Papers, Please!
+                  goonmovement
                 </Link>
               </Button>
             </div>

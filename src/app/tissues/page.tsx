@@ -6,7 +6,7 @@ import { Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-export default function TissuePapersComingSoon() {
+export default function GoonMovementComingSoon() {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function TissuePapersComingSoon() {
         )}
       >
         <h1 className="text-5xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent mb-4">
-          Tissue Papers, Please!
+          GOONMOVEMENT
         </h1>
         <p className="text-2xl text-muted-foreground mb-8">
           Cumming Soon!
