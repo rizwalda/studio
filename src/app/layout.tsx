@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Tissue Papers, Please!',
+  title: 'goonmovement',
   description: 'Hitchhiker’s Guide to Gooning.',
 };
 
